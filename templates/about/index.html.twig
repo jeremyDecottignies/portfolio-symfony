@@ -1,20 +1,101 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AboutController!{% endblock %}
+{% block title %}À propos{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="row mb-5">
+        <div class="col-md-4 text-center mb-4 mb-md-0">
+            {# Si tu as une photo de profil plus tard #}
+            {# <img src="{{ asset('images/profil.jpg') }}" class="rounded-circle img-fluid mb-3" alt="Photo de profil"> #}
+            <div class="rounded-circle bg-secondary d-inline-flex align-items-center justify-content-center"
+                 style="width: 160px; height: 160px; color: white; font-size: 3rem;">
+                {{ 'J' }} {# initiale de ton prénom par ex. #}
+            </div>
+        </div>
+        <div class="col-md-8">
+            <h1 class="mb-3">À propos de moi</h1>
+            <p class="lead">
+                Je m'appelle Jérémy, étudiant en BTS SIO (Services Informatiques aux Organisations).
+                Passionné par l'informatique, je m'intéresse particulièrement à {{ 'le développement web et les applications' }}.
+            </p>
+            <p>
+                À travers ce portfolio, je présente les projets réalisés pendant ma formation, mes stages
+                et en autonomie. Mon objectif est de continuer mes études ou intégrer le monde professionnel
+                en tant que {{ 'développeur' }}.
+            </p>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+            {# Bouton CV si tu as un fichier dans public/cv/ #}
+             <a href="{{ asset('cv/CV.pdf') }}" target="_blank" class="btn btn-outline-primary mt-2">
+                Télécharger mon CV
+            </a>
+        </div>
+    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/jerem/PhpstormProjects/Portfolio/src/Controller/AboutController.php</code></li>
-        <li>Your template at <code>C:/Users/jerem/PhpstormProjects/Portfolio/templates/about/index.html.twig</code></li>
-    </ul>
-</div>
+    <hr class="mb-5">
+
+    <h2 class="mb-3">Mon parcours</h2>
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">BTS SIO</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Option {{ 'SLAM ' }} – Lycée la Colinière - Nantes</h6>
+                    <p class="card-text">
+                        Le BTS SIO me permet d'acquérir des compétences en programmation,
+                        bases de données, systèmes, réseaux, cybersécurité et gestion de projet.
+                    </p>
+                    <ul class="mb-0">
+                        <li>Analyse des besoins des utilisateurs</li>
+                        <li>Conception et développement de solutions</li>
+                        <li>Travail en équipe et gestion de projet</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Objectifs</h5>
+                    <p class="card-text">
+                        À moyen terme, j’aimerais :
+                    </p>
+                    <ul class="mb-0">
+                        <li>Continuer dans {{ 'le développement web' }}</li>
+                        <li>Me spécialiser en {{ 'Symfony, PHP, JS, Python, Java...' }}</li>
+                        <li>Travailler sur des projets concrets et utiles</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="mb-3">Compétences</h2>
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Développement</h5>
+                    <ul class="mb-0">
+                        <li>HTML / CSS</li>
+                        <li>JavaScript</li>
+                        <li>PHP / Symfony</li>
+                        <li>SQL / MySQL</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Outils & Méthodes</h5>
+                    <ul class="mb-0">
+                        <li>Git / GitHub</li>
+                        <li>VS Code / PhpStorm</li>
+                        <li>Méthodes agiles (Scrum, Kanban)</li>
+                        <li>Rédaction de documentation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

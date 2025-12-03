@@ -8,33 +8,268 @@
     {# Bootstrap CDN pour aller vite #}
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
-    {% block stylesheets %}{% endblock %}
+        rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+
+    {% block stylesheets %}
+        <style>
+            body {
+                background: #f5f7fb;
+                color: #111827;
+            }
+
+            .card {
+                border: none;
+                border-radius: 1rem;
+                transition:
+                    transform 0.2s ease,
+                    box-shadow 0.2s ease,
+                    border-color 0.2s ease,
+                    background-color 0.2s ease;
+                background-color: #ffffff;
+            }
+
+            .card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 8px 24px rgba(15, 23, 42, 0.15);
+                border-color: rgba(59, 130, 246, 0.4);
+            }
+
+            .card .card-title {
+                font-weight: 600;
+            }
+
+            .btn-primary,
+            .btn-outline-primary {
+                border-radius: 999px;
+                transition:
+                    transform 0.15s ease,
+                    box-shadow 0.15s ease,
+                    background-color 0.15s ease,
+                    color 0.15s ease,
+                    border-color 0.15s ease;
+            }
+
+            .btn-primary:hover,
+            .btn-outline-primary:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 6px 18px rgba(59, 130, 246, 0.4);
+            }
+
+            h1, h2, h3 {
+                font-weight: 700;
+            }
+
+            .tech-icons i {
+                font-size: 1.2rem;
+                vertical-align: middle;
+            }
+
+            .tech-icons-large i {
+                vertical-align: middle;
+            }
+
+            .navbar {
+                transition: box-shadow 0.2s ease, background-color 0.2s ease;
+            }
+
+            .navbar.scrolled {
+                box-shadow: 0 4px 14px rgba(15, 23, 42, 0.15);
+                background-color: #111827 !important; /* un peu plus foncé au scroll */
+            }
+
+            .nav-link {
+                position: relative;
+                transition: color 0.15s ease;
+            }
+
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: 0.2rem;
+                width: 0;
+                height: 2px;
+                background-color: #0d6efd;
+                transition: width 0.2s ease;
+            }
+
+            .nav-link:hover::after,
+            .nav-link.active::after {
+                width: 100%;
+            }
+
+            footer {
+                transition: background-color 0.2s ease, color 0.2s ease;
+            }
+
+            /* 🌙 MODE SOMBRE */
+            body.dark-mode {
+                background: #020617;
+                color: #e5e7eb;
+            }
+
+            body.dark-mode .card {
+                background-color: #111827;
+                color: #e5e7eb;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+            }
+
+            body.dark-mode .navbar {
+                background-color: #020617 !important;
+                box-shadow: 0 4px 14px rgba(0, 0, 0, 0.7);
+            }
+
+            body.dark-mode .navbar.scrolled {
+                background-color: #020617 !important;
+            }
+
+            body.dark-mode .nav-link::after {
+                background-color: #38bdf8;
+            }
+
+            body.dark-mode .btn-primary {
+                background-color: #2563eb;
+                border-color: #2563eb;
+            }
+
+            body.dark-mode .btn-outline-primary {
+                color: #93c5fd;
+                border-color: #2563eb;
+            }
+
+            body.dark-mode .btn-outline-primary:hover {
+                background-color: #2563eb;
+                color: #f9fafb;
+            }
+
+            body.dark-mode footer {
+                background-color: #020617;
+                color: #6b7280;
+            }
+
+            body.dark-mode .form-control {
+                background-color: #020617;
+                border-color: #374151;
+                color: #e5e7eb;
+            }
+
+            body.dark-mode .form-control:focus {
+                background-color: #020617;
+                border-color: #60a5fa;
+                color: #f9fafb;
+                box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+            }
+
+            body.dark-mode .card .text-muted {
+                color: #9ca3af !important;
+            }
+        </style>
+    {% endblock %}
 </head>
 <body class="bg-light">
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
     <div class="container">
-        <a class="navbar-brand" href="{{ path('app_home') }}">Mon Portfolio</a>
-        <div>
-            <a class="nav-link d-inline-block text-white" href="{{ path('app_home') }}">Accueil</a>
-            <a class="nav-link d-inline-block text-white" href="{{ path('project_index') }}">Projets</a>
-            <a class="nav-link d-inline-block text-white" href="{{ path('app_about') }}">À propos</a>
-            <a class="nav-link d-inline-block text-white" href="{{ path('app_contact') }}">Contact</a>
+        <a class="navbar-brand fw-bold" href="{{ path('home') }}">Mon Portfolio</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link {% if app.request.attributes.get('_route') starts with 'home' %}active{% endif %}"
+                       href="{{ path('home') }}">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if app.request.attributes.get('_route') starts with 'project_' %}active{% endif %}"
+                       href="{{ path('project_index') }}">Projets</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if app.request.attributes.get('_route') starts with 'about' %}active{% endif %}"
+                       href="{{ path('about') }}">A propos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if app.request.attributes.get('_route') starts with 'contact' %}active{% endif %}"
+                       href="{{ path('contact') }}">Contact</a>
+                </li>
+
+                {# Zone droite : Connexion / Déconnexion #}
+                {% if app.user %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if app.request.attributes.get('_route') starts with 'app_login' %}active{% endif %}"
+                           href="{{ path('app_login') }}">Connexion</a>
+                    </li>
+                {% endif %}
+
+                {# 🌙 Toggle mode sombre #}
+                <li class="nav-item ms-2">
+                    <button id="theme-toggle" class="btn btn-sm btn-outline-light" type="button">
+                        🌙
+                    </button>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
 
-<main class="container mb-5">
+<main class="container py-4">
     {% block body %}{% endblock %}
 </main>
 
-<footer class="text-center text-muted mb-3">
-    &copy; {{ "now"|date("Y") }} Ton Nom - BTS SIO
+<footer class="text-center text-muted py-3 mt-5">
+    &copy; {{ "now"|date("Y") }} Decottignies Jérémy – BTS SIO
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-{% block javascripts %}{% endblock %}
+
+<script>
+    // Effet scroll sur la navbar
+    document.addEventListener('scroll', function () {
+        const navbar = document.querySelector('.navbar');
+        if (!navbar) return;
+
+        if (window.scrollY > 10) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // Mode sombre / clair avec mémorisation
+    (function () {
+        const body = document.body;
+        const toggleBtn = document.getElementById('theme-toggle');
+
+        if (!toggleBtn) return;
+
+        // Charger la préférence stockée
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-mode');
+            toggleBtn.textContent = '☀️';
+        } else {
+            toggleBtn.textContent = '🌙';
+        }
+
+        toggleBtn.addEventListener('click', function () {
+            const isDark = body.classList.toggle('dark-mode');
+            if (isDark) {
+                localStorage.setItem('theme', 'dark');
+                toggleBtn.textContent = '☀️';
+            } else {
+                localStorage.setItem('theme', 'light');
+                toggleBtn.textContent = '🌙';
+            }
+        });
+    })();
+</script>
+
 </body>
 </html>

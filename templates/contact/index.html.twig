@@ -1,20 +1,114 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ContactController!{% endblock %}
+{% block title %}Contact{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+            <div class="text-center mb-4">
+                <h1 class="mb-2">Me contacter</h1>
+                <p class="text-muted mb-0">
+                    Une question, une opportunité de stage ou d’alternance ? N’hésitez pas à m’écrire.
+                </p>
+            </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/jerem/PhpstormProjects/Portfolio/src/Controller/ContactController.php</code></li>
-        <li>Your template at <code>C:/Users/jerem/PhpstormProjects/Portfolio/templates/contact/index.html.twig</code></li>
-    </ul>
-</div>
+            {# Messages flash (succès, erreur, etc.) #}
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            <div class="row g-4">
+                <div class="col-md-7">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body p-4">
+                            <h2 class="h5 mb-3">Envoyer un message</h2>
+
+                            {{ form_start(contactForm) }}
+                            <div class="mb-3">
+                                {{ form_label(contactForm.nom, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(contactForm.nom, {
+                                    'attr': {'class': 'form-control', 'placeholder': 'Votre nom'}
+                                }) }}
+                                {{ form_errors(contactForm.nom) }}
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form_label(contactForm.email, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(contactForm.email, {
+                                    'attr': {'class': 'form-control', 'placeholder': 'votre.email@example.com'}
+                                }) }}
+                                {{ form_errors(contactForm.email) }}
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form_label(contactForm.sujet, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(contactForm.sujet, {
+                                    'attr': {'class': 'form-control', 'placeholder': 'Sujet de votre message'}
+                                }) }}
+                                {{ form_errors(contactForm.sujet) }}
+                            </div>
+
+                            <div class="mb-3">
+                                {{ form_label(contactForm.message, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(contactForm.message, {
+                                    'attr': {'class': 'form-control', 'rows': 6, 'placeholder': 'Votre message...'}
+                                }) }}
+                                {{ form_errors(contactForm.message) }}
+                            </div>
+
+                            <button class="btn btn-primary w-100 mt-2">
+                                Envoyer le message
+                            </button>
+                            {{ form_end(contactForm) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="card shadow-sm border-0 h-100">
+                        <div class="card-body p-4">
+                            <h2 class="h5 mb-3">Informations</h2>
+                            <p class="text-muted">
+                                Vous pouvez aussi me contacter directement via les moyens suivants&nbsp;:
+                            </p>
+
+                            <ul class="list-unstyled mb-4">
+                                <li class="mb-2">
+                                    <strong>Email :</strong>
+                                    <a href="mailto:jeremyDecottignies@outlook.com">
+                                        jeremyDecottignies@outlook.com
+                                    </a>
+                                </li>
+                                <li class="mb-2">
+                                    <strong>GitHub :</strong>
+                                    <a href="https://github.com/jeremyDecottignies" target="_blank">
+                                        github
+                                    </a>
+                                </li>
+                                <li class="mb-2">
+                                    <strong>LinkedIn :</strong>
+                                    <a href="#" target="_blank">
+                                        LinkedIn
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <h2 class="h6 text-muted mb-2">Disponibilité</h2>
+                            <p class="text-muted small mb-0">
+                                Ouvert aux stages, alternances et projets liés au BTS SIO.<br>
+                                N’hésitez pas à préciser votre besoin dans le message.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 {% endblock %}
