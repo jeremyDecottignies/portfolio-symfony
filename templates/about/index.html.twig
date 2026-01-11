@@ -98,4 +98,70 @@
             </div>
         </div>
     </div>
+
+    <h2 class="mb-3 mt-5">Expériences</h2>
+
+    {% if experiences is not empty %}
+        <div class="timeline">
+            {% for exp in experiences %}
+                <div class="timeline-item mb-4">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h5 class="mb-1">
+                            {{ exp.titre }} – <span class="text-primary">{{ exp.entreprise }}</span>
+                        </h5>
+                        <div class="text-muted small mb-1">
+                            {{ exp.lieu }} • {{ exp.type }}<br>
+                            {{ exp.dateDebut|date('m/Y') }}
+                            {% if exp.dateFin %}
+                                – {{ exp.dateFin|date('m/Y') }}
+                            {% else %}
+                                – <span class="badge bg-success">En cours</span>
+                            {% endif %}
+                        </div>
+                        <p class="mb-0">
+                            {{ exp.description|raw }}
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted">Pas encore d’expérience renseignée.</p>
+    {% endif %}
+
+    <h2 class="mb-3 mt-5">Parcours scolaire</h2>
+
+    {% if educations is not empty %}
+        <div class="timeline mb-4">
+            {% for edu in educations %}
+                <div class="timeline-item mb-4">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <h5 class="mb-1">
+                            {{ edu.intitule }} – <span class="text-primary">{{ edu.etablissement }}</span>
+                        </h5>
+                        <div class="text-muted small mb-1">
+                            {{ edu.lieu }}{% if edu.niveau %} • {{ edu.niveau }}{% endif %}<br>
+                            {{ edu.dateDebut|date('Y') }}
+                            {% if edu.dateFin %}
+                                – {{ edu.dateFin|date('Y') }}
+                            {% else %}
+                                – <span class="badge bg-success">En cours</span>
+                            {% endif %}
+                        </div>
+                        {% if edu.description %}
+                            <p class="mb-0">
+                                {{ edu.description|raw }}
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted">Parcours scolaire à venir.</p>
+    {% endif %}
+
+
 {% endblock %}
