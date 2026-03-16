@@ -1,61 +1,166 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mes projets{% endblock %}
+{% block title %}Projets — Portfolio Jérémy Decottignies{% endblock %}
 
 {% block body %}
-    <h1 class="mb-4 text-center">Mes projets</h1>
-    <p class="text-muted mb-0">
-        Quelques réalisations faites en BTS SIO et en projet personnel.
-    </p>
 
-    <div class="row g-4">
-        {% for project in projects %}
-            <div class="col-md-4">
-                <div class="card h-100 shadow-sm">
-                    {# Si tu ajoutes une image plus tard #}
-                    {% if project.imageName is defined and project.imageName %}
-                        <img src="{{ asset('uploads/projects/' ~ project.imageName) }}" class="card-img-top" alt="{{ project.nom }}">
-                    {% endif %}
+    {# ═══════════════════════════════════════════════════════════
+   EN-TÊTE
+═══════════════════════════════════════════════════════════ #}
+    <section class="py-5" style="background: var(--bg); position: relative; overflow: hidden;">
 
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">{{ project.nom }}</h5>
-                        <p class="card-text">
-                            {{ project.courteDescription|striptags|slice(0, 120) ~ '...' }}
-                        </p>
-                        {# Icônes de technologies #}
-                        {% if project.technologies is defined and project.technologies is not empty %}
-                            <div class="mt-2 tech-icons">
-                                {% for tech in project.technologies %}
-                                    {% set iconClass = {
-                                        'html': 'devicon-html5-plain colored',
-                                        'css': 'devicon-css3-plain colored',
-                                        'js': 'devicon-javascript-plain colored',
-                                        'javascript': 'devicon-javascript-plain colored',
-                                        'php': 'devicon-php-plain colored',
-                                        'symfony': 'devicon-symfony-original',
-                                        'mysql': 'devicon-mysqli-plain colored',
-                                        'sql': 'devicon-mysql-plain colored',
-                                        'python': 'devicon-python-plain colored'
-                                    }[tech|lower] ?? null %}
+        <div aria-hidden="true" style="
+        position: absolute; top: -60px; right: -60px;
+        width: 320px; height: 320px; border-radius: 50%;
+        background: radial-gradient(circle, rgba(var(--accent-rgb),.07) 0%, transparent 70%);
+        pointer-events: none;
+    "></div>
 
-                                    {% if iconClass %}
-                                        <i class="{{ iconClass }} me-1" title="{{ tech }}"></i>
-                                    {% else %}
-                                        <span class="badge bg-secondary me-1">{{ tech }}</span>
-                                    {% endif %}
-                                {% endfor %}
+        <div class="container py-2">
+            <p class="section-label fade-up">Réalisations</p>
+            <h1 class="fade-up fade-up-delay-1 mb-3" style="font-size: clamp(1.8rem, 4vw, 2.8rem);">
+                Mes projets
+            </h1>
+            <p class="fade-up fade-up-delay-2 mb-0" style="color: var(--text-muted); max-width: 520px; font-weight: 300; font-size: 1.05rem;">
+                Quelques réalisations faites en BTS SIO, en stage et en projets personnels.
+            </p>
+        </div>
+    </section>
+
+    {# ═══════════════════════════════════════════════════════════
+   GRILLE DES PROJETS
+═══════════════════════════════════════════════════════════ #}
+    <section class="py-5 section-alt">
+        <div class="container">
+
+            {# Map icônes technologies #}
+            {% set iconMap = {
+                'html':       'devicon-html5-plain colored',
+                'css':        'devicon-css3-plain colored',
+                'js':         'devicon-javascript-plain colored',
+                'javascript': 'devicon-javascript-plain colored',
+                'php':        'devicon-php-plain colored',
+                'symfony':    'devicon-symfony-original',
+                'mysql':      'devicon-mysql-plain colored',
+                'sql':        'devicon-mysql-plain colored',
+                'python':     'devicon-python-plain colored',
+                'git':        'devicon-git-plain colored',
+                'bootstrap':  'devicon-bootstrap-plain colored'
+            } %}
+
+            <div class="row g-4">
+                {% for project in projects %}
+                    <div class="col-md-6 col-lg-4 reveal" style="transition-delay: {{ loop.index0 * 0.07 }}s;">
+                        <div class="card h-100" style="overflow: hidden;">
+
+                            {# Image #}
+                            {% if project.imageName is defined and project.imageName %}
+                                <div style="height: 180px; overflow: hidden; background: var(--bg-section);">
+                                    <img src="{{ asset('uploads/projects/' ~ project.imageName) }}"
+                                         alt="{{ project.nom }}"
+                                         style="width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease;"
+                                         onmouseover="this.style.transform='scale(1.04)'"
+                                         onmouseout="this.style.transform='scale(1)'">
+                                </div>
+                            {% else %}
+                                {# Placeholder coloré si pas d'image #}
+                                <div style="
+                                height: 100px;
+                                background: linear-gradient(135deg,
+                                    rgba(var(--accent-rgb),.08) 0%,
+                                    rgba(var(--accent-rgb),.03) 100%);
+                                display: flex; align-items: center; justify-content: center;
+                                border-bottom: 1px solid var(--border);
+                            ">
+                                <span style="
+                                    font-family: var(--font-display);
+                                    font-weight: 800;
+                                    font-size: 1.8rem;
+                                    color: rgba(var(--accent-rgb),.25);
+                                    letter-spacing: -0.05em;
+                                ">{{ project.nom|slice(0,2)|upper }}</span>
+                                </div>
+                            {% endif %}
+
+                            <div class="card-body d-flex flex-column p-4">
+
+                                {# Tag catégorie #}
+                                {% if project.categorie is defined and project.categorie %}
+                                    <span class="tech-badge mb-3 align-self-start">{{ project.categorie }}</span>
+                                {% endif %}
+
+                                <h2 class="card-title mb-2" style="font-size: 1rem;">{{ project.nom }}</h2>
+
+                                <p class="text-muted mb-3" style="font-size: .875rem; flex: 1; line-height: 1.65;">
+                                    {{ project.courteDescription|striptags|slice(0, 115) ~ '…' }}
+                                </p>
+
+                                {# Icônes technologies #}
+                                {% if project.technologies is defined and project.technologies is not empty %}
+                                    <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+                                        {% for tech in project.technologies|slice(0, 5) %}
+                                            {% set icon = iconMap[tech|lower] ?? null %}
+                                            {% if icon %}
+                                                <i class="{{ icon }}" title="{{ tech }}" style="font-size: 1.15rem;"></i>
+                                            {% else %}
+                                                <span style="
+                                                font-size: .7rem; font-weight: 500;
+                                                padding: .2rem .6rem; border-radius: 999px;
+                                                background: var(--bg); color: var(--text-muted);
+                                                border: 1px solid var(--border);
+                                            ">{{ tech }}</span>
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% if project.technologies|length > 5 %}
+                                            <span style="font-size: .75rem; color: var(--text-muted);">
+                                            +{{ project.technologies|length - 5 }}
+                                        </span>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+
+                                <a href="{{ path('project_show', { id: project.id }) }}"
+                                   class="btn btn-outline-primary btn-sm align-self-start mt-auto">
+                                    Voir le projet →
+                                </a>
+
                             </div>
-                        {% endif %}
-                        <div class="mt-auto pt-3">
-                            <a href="{{ path('project_show', { id: project.id }) }}" class="btn btn-primary btn-sm">
-                                Voir le projet
-                            </a>
                         </div>
+                    </div>
+
+                {% else %}
+                    <div class="col-12 text-center py-5">
+                        <p class="text-muted mb-3" style="font-size: 1.05rem;">
+                            Aucun projet pour le moment.
+                        </p>
+                        <a href="{{ path('home') }}" class="btn btn-outline-primary">← Retour à l'accueil</a>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </section>
+
+    {# ═══════════════════════════════════════════════════════════
+   CTA CONTACT
+═══════════════════════════════════════════════════════════ #}
+    {% if projects|length > 0 %}
+        <section class="py-5" style="background: var(--bg);">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6 text-center reveal">
+                        <h2 class="mb-3" style="font-size: 1.5rem;">
+                            Un projet en tête ?
+                        </h2>
+                        <p class="text-muted mb-4" style="font-weight: 300;">
+                            Je suis disponible pour une alternance ou un stage.
+                            N'hésite pas à me contacter.
+                        </p>
+                        <a href="{{ path('contact') }}" class="btn btn-primary">Me contacter →</a>
                     </div>
                 </div>
             </div>
-        {% else %}
-            <p>Aucun projet pour le moment.</p>
-        {% endfor %}
-    </div>
+        </section>
+    {% endif %}
+
 {% endblock %}
