@@ -1,167 +1,250 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}À propos{% endblock %}
+{% block title %}À propos — Jérémy Decottignies{% endblock %}
 
 {% block body %}
-    <div class="row mb-5">
-        <div class="col-md-4 text-center mb-4 mb-md-0">
-            {# Si tu as une photo de profil plus tard #}
-            {# <img src="{{ asset('images/profil.jpg') }}" class="rounded-circle img-fluid mb-3" alt="Photo de profil"> #}
-            <div class="rounded-circle bg-secondary d-inline-flex align-items-center justify-content-center"
-                 style="width: 160px; height: 160px; color: white; font-size: 3rem;">
-                {{ 'J' }} {# initiale de ton prénom par ex. #}
-            </div>
-        </div>
-        <div class="col-md-8">
-            <h1 class="mb-3">À propos de moi</h1>
-            <p class="lead">
-                Je m'appelle Jérémy, étudiant en BTS SIO (Services Informatiques aux Organisations).
-                Passionné par l'informatique, je m'intéresse particulièrement à {{ 'le développement web et les applications' }}.
-            </p>
-            <p>
-                À travers ce portfolio, je présente les projets réalisés pendant ma formation, mes stages
-                et en autonomie. Mon objectif est de continuer mes études ou intégrer le monde professionnel
-                en tant que {{ 'développeur' }}.
-            </p>
 
-            {# Bouton CV si tu as un fichier dans public/cv/ #}
-             <a href="{{ asset('cv/CV.pdf') }}" target="_blank" class="btn btn-outline-primary mt-2">
-                Télécharger mon CV
-            </a>
-        </div>
-    </div>
+    {# ═══════════════════════════════════════════════════════════
+   HERO À PROPOS
+═══════════════════════════════════════════════════════════ #}
+    <section class="py-5" style="background: var(--bg); position: relative; overflow: hidden;">
 
-    <hr class="mb-5">
+        <div aria-hidden="true" style="
+        position: absolute; top: -60px; right: -60px;
+        width: 350px; height: 350px; border-radius: 50%;
+        background: radial-gradient(circle, rgba(var(--accent-rgb),.07) 0%, transparent 70%);
+        pointer-events: none;
+    "></div>
 
-    <h2 class="mb-3">Mon parcours</h2>
-    <div class="row mb-5">
-        <div class="col-md-6">
-            <div class="card shadow-sm mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">BTS SIO</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Option {{ 'SLAM ' }} – Lycée la Colinière - Nantes</h6>
-                    <p class="card-text">
-                        Le BTS SIO me permet d'acquérir des compétences en programmation,
-                        bases de données, systèmes, réseaux, cybersécurité et gestion de projet.
+        <div class="container py-3">
+            <div class="row align-items-center gy-5">
+
+                {# Avatar #}
+                <div class="col-md-3 text-center fade-up">
+                    <div style="
+                    width: 140px; height: 140px;
+                    border-radius: 50%;
+                    background: linear-gradient(135deg, rgba(var(--accent-rgb),.15), rgba(var(--accent-rgb),.05));
+                    border: 2px solid rgba(var(--accent-rgb),.2);
+                    display: inline-flex; align-items: center; justify-content: center;
+                    font-family: var(--font-display); font-size: 3rem; font-weight: 800;
+                    color: var(--accent);
+                ">J</div>
+                </div>
+
+                {# Intro #}
+                <div class="col-md-9">
+                    <p class="section-label fade-up">À propos</p>
+                    <h1 class="fade-up fade-up-delay-1 mb-3" style="font-size: clamp(1.8rem, 4vw, 2.6rem);">
+                        Jérémy Decottignies
+                    </h1>
+                    <p class="fade-up fade-up-delay-2 mb-4" style="font-size: 1.05rem; color: var(--text-muted); max-width: 560px; font-weight: 300;">
+                        Étudiant en BTS SIO option SLAM au Lycée la Colinière de Nantes. Passionné par
+                        le développement web, j'aime construire des applications robustes et lisibles
+                        avec Symfony, PHP et des interfaces soignées.
                     </p>
-                    <ul class="mb-0">
-                        <li>Analyse des besoins des utilisateurs</li>
-                        <li>Conception et développement de solutions</li>
-                        <li>Travail en équipe et gestion de projet</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card shadow-sm mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Objectifs</h5>
-                    <p class="card-text">
-                        À moyen terme, j’aimerais :
-                    </p>
-                    <ul class="mb-0">
-                        <li>Continuer dans {{ 'le développement web' }}</li>
-                        <li>Me spécialiser en {{ 'Symfony, PHP, JS, Python, Java...' }}</li>
-                        <li>Travailler sur des projets concrets et utiles</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <h2 class="mb-3">Compétences</h2>
-    <div class="row">
-        <div class="col-md-4 mb-3">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Développement</h5>
-                    <ul class="mb-0">
-                        <li>HTML / CSS</li>
-                        <li>JavaScript</li>
-                        <li>PHP / Symfony</li>
-                        <li>SQL / MySQL</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-3">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Outils & Méthodes</h5>
-                    <ul class="mb-0">
-                        <li>Git / GitHub</li>
-                        <li>VS Code / PhpStorm</li>
-                        <li>Méthodes agiles (Scrum, Kanban)</li>
-                        <li>Rédaction de documentation</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <h2 class="mb-3 mt-5">Expériences</h2>
-
-    {% if experiences is not empty %}
-        <div class="timeline">
-            {% for exp in experiences %}
-                <div class="timeline-item mb-4">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h5 class="mb-1">
-                            {{ exp.titre }} – <span class="text-primary">{{ exp.entreprise }}</span>
-                        </h5>
-                        <div class="text-muted small mb-1">
-                            {{ exp.lieu }} • {{ exp.type }}<br>
-                            {{ exp.dateDebut|date('m/Y') }}
-                            {% if exp.dateFin %}
-                                – {{ exp.dateFin|date('m/Y') }}
-                            {% else %}
-                                – <span class="badge bg-success">En cours</span>
-                            {% endif %}
-                        </div>
-                        <p class="mb-0">
-                            {{ exp.description|raw }}
-                        </p>
+                    <div class="fade-up fade-up-delay-3 d-flex flex-wrap gap-2">
+                        <a href="{{ asset('cv/CV.pdf') }}" target="_blank" class="btn btn-primary">
+                            Télécharger mon CV
+                        </a>
+                        <a href="{{ path('contact') }}" class="btn btn-outline-primary">Me contacter</a>
                     </div>
                 </div>
-            {% endfor %}
+
+            </div>
         </div>
-    {% else %}
-        <p class="text-muted">Pas encore d’expérience renseignée.</p>
-    {% endif %}
+    </section>
 
-    <h2 class="mb-3 mt-5">Parcours scolaire</h2>
+    {# ═══════════════════════════════════════════════════════════
+   COMPÉTENCES
+═══════════════════════════════════════════════════════════ #}
+    <section class="py-5 section-alt">
+        <div class="container">
 
-    {% if educations is not empty %}
-        <div class="timeline mb-4">
-            {% for edu in educations %}
-                <div class="timeline-item mb-4">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h5 class="mb-1">
-                            {{ edu.intitule }} – <span class="text-primary">{{ edu.etablissement }}</span>
-                        </h5>
-                        <div class="text-muted small mb-1">
-                            {{ edu.lieu }}{% if edu.niveau %} • {{ edu.niveau }}{% endif %}<br>
-                            {{ edu.dateDebut|date('Y') }}
-                            {% if edu.dateFin %}
-                                – {{ edu.dateFin|date('Y') }}
-                            {% else %}
-                                – <span class="badge bg-success">En cours</span>
-                            {% endif %}
+            <p class="section-label reveal">Savoir-faire</p>
+            <h2 class="mb-4 reveal" style="font-size: 1.75rem;">Compétences</h2>
+
+            <div class="row g-4">
+
+                {# Développement #}
+                <div class="col-md-4 reveal">
+                    <div class="card h-100 p-4">
+                        <div class="mb-3" style="
+                        width: 44px; height: 44px; border-radius: .75rem;
+                        background: rgba(var(--accent-rgb),.1);
+                        display: flex; align-items: center; justify-content: center;
+                        font-size: 1.3rem;
+                    ">💻</div>
+                        <h3 class="card-title mb-3" style="font-size: 1rem;">Développement</h3>
+                        <div class="d-flex flex-wrap gap-2">
+                            {% set devSkills = ['HTML / CSS', 'JavaScript', 'PHP 8', 'Symfony 6', 'SQL / MySQL', 'Twig', 'Doctrine ORM'] %}
+                            {% for s in devSkills %}
+                                <span class="tech-badge">{{ s }}</span>
+                            {% endfor %}
                         </div>
-                        {% if edu.description %}
-                            <p class="mb-0">
-                                {{ edu.description|raw }}
+                    </div>
+                </div>
+
+                {# Outils #}
+                <div class="col-md-4 reveal" style="transition-delay:.08s">
+                    <div class="card h-100 p-4">
+                        <div class="mb-3" style="
+                        width: 44px; height: 44px; border-radius: .75rem;
+                        background: rgba(var(--accent-rgb),.1);
+                        display: flex; align-items: center; justify-content: center;
+                        font-size: 1.3rem;
+                    ">🛠️</div>
+                        <h3 class="card-title mb-3" style="font-size: 1rem;">Outils &amp; Méthodes</h3>
+                        <div class="d-flex flex-wrap gap-2">
+                            {% set toolSkills = ['Git / GitHub', 'VS Code', 'PhpStorm', 'Scrum', 'Kanban', 'Documentation'] %}
+                            {% for s in toolSkills %}
+                                <span class="tech-badge">{{ s }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                {# Soft skills #}
+                <div class="col-md-4 reveal" style="transition-delay:.16s">
+                    <div class="card h-100 p-4">
+                        <div class="mb-3" style="
+                        width: 44px; height: 44px; border-radius: .75rem;
+                        background: rgba(var(--accent-rgb),.1);
+                        display: flex; align-items: center; justify-content: center;
+                        font-size: 1.3rem;
+                    ">🎯</div>
+                        <h3 class="card-title mb-3" style="font-size: 1rem;">Objectifs</h3>
+                        <ul class="mb-0" style="padding-left: 1.1rem; color: var(--text-muted); font-size: .9rem;">
+                            <li class="mb-1">Continuer dans le développement web</li>
+                            <li class="mb-1">Se spécialiser sur Symfony / API Platform</li>
+                            <li class="mb-1">Travailler sur des projets concrets</li>
+                            <li>Évoluer vers un Bachelor ou BUT</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    {# ═══════════════════════════════════════════════════════════
+   EXPÉRIENCES
+═══════════════════════════════════════════════════════════ #}
+    <section class="py-5" style="background: var(--bg);">
+        <div class="container">
+
+            <p class="section-label reveal">Parcours professionnel</p>
+            <h2 class="mb-4 reveal" style="font-size: 1.75rem;">Expériences</h2>
+
+            {% if experiences is not empty %}
+                <div class="timeline">
+                    {% for exp in experiences %}
+                        <div class="timeline-item mb-4 ps-3 reveal" style="transition-delay: {{ loop.index0 * 0.1 }}s;">
+                            <div class="timeline-dot"></div>
+
+                            <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+                                <h5 class="mb-0" style="font-size: 1rem;">{{ exp.titre }}</h5>
+                                <span class="tech-badge">{{ exp.entreprise }}</span>
+                                {% if not exp.dateFin %}
+                                    <span style="
+                                    font-size: .7rem; font-weight: 600; padding: .2rem .6rem;
+                                    border-radius: 999px;
+                                    background: rgba(22,163,74,.12); color: #16a34a;
+                                    border: 1px solid rgba(22,163,74,.2);
+                                ">En cours</span>
+                                {% endif %}
+                            </div>
+
+                            <p class="mb-2" style="font-size: .8rem; color: var(--text-muted);">
+                                {{ exp.lieu }} · {{ exp.type }} ·
+                                {{ exp.dateDebut|date('m/Y') }}
+                                {% if exp.dateFin %} – {{ exp.dateFin|date('m/Y') }}{% endif %}
                             </p>
-                        {% endif %}
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <p class="text-muted">Parcours scolaire à venir.</p>
-    {% endif %}
 
+                            <p class="mb-0" style="font-size: .9rem; color: var(--text-muted);">
+                                {{ exp.description|raw }}
+                            </p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-muted">Pas encore d'expérience renseignée.</p>
+            {% endif %}
+
+        </div>
+    </section>
+
+    {# ═══════════════════════════════════════════════════════════
+   PARCOURS SCOLAIRE
+═══════════════════════════════════════════════════════════ #}
+    <section class="py-5 section-alt">
+        <div class="container">
+
+            <p class="section-label reveal">Formation</p>
+            <h2 class="mb-4 reveal" style="font-size: 1.75rem;">Parcours scolaire</h2>
+
+            {% if educations is not empty %}
+                <div class="timeline">
+                    {% for edu in educations %}
+                        <div class="timeline-item mb-4 ps-3 reveal" style="transition-delay: {{ loop.index0 * 0.1 }}s;">
+                            <div class="timeline-dot"></div>
+
+                            <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+                                <h5 class="mb-0" style="font-size: 1rem;">{{ edu.intitule }}</h5>
+                                <span class="tech-badge">{{ edu.etablissement }}</span>
+                                {% if not edu.dateFin %}
+                                    <span style="
+                                    font-size: .7rem; font-weight: 600; padding: .2rem .6rem;
+                                    border-radius: 999px;
+                                    background: rgba(22,163,74,.12); color: #16a34a;
+                                    border: 1px solid rgba(22,163,74,.2);
+                                ">En cours</span>
+                                {% endif %}
+                            </div>
+
+                            <p class="mb-2" style="font-size: .8rem; color: var(--text-muted);">
+                                {{ edu.lieu }}
+                                {% if edu.niveau %} · {{ edu.niveau }}{% endif %} ·
+                                {{ edu.dateDebut|date('Y') }}
+                                {% if edu.dateFin %} – {{ edu.dateFin|date('Y') }}{% endif %}
+                            </p>
+
+                            {% if edu.description %}
+                                <p class="mb-0" style="font-size: .9rem; color: var(--text-muted);">
+                                    {{ edu.description|raw }}
+                                </p>
+                            {% endif %}
+
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-muted">Parcours scolaire à venir.</p>
+            {% endif %}
+
+        </div>
+    </section>
+
+    {# ═══════════════════════════════════════════════════════════
+   CTA CONTACT
+═══════════════════════════════════════════════════════════ #}
+    <section class="py-5" style="background: var(--bg);">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-7 text-center reveal">
+                    <h2 class="mb-3" style="font-size: 1.75rem;">
+                        Envie de collaborer ?
+                    </h2>
+                    <p class="text-muted mb-4" style="font-weight: 300;">
+                        Je suis ouvert aux opportunités d'alternance, de stage ou simplement à
+                        un échange autour d'un projet.
+                    </p>
+                    <a href="{{ path('contact') }}" class="btn btn-primary btn-lg">
+                        Me contacter →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
 {% endblock %}

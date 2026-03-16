@@ -1,50 +1,183 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connexion{% endblock %}
+{% block title %}Connexion — Jérémy Decottignies{% endblock %}
 
 {% block body %}
-    <div class="d-flex justify-content-center align-items-center" style="min-height: 70vh;">
-        <div class="col-md-4">
-            <div class="card shadow-sm border-0">
-                <div class="card-body p-4">
-                    <h1 class="h4 mb-3 text-center">Connexion</h1>
 
-                    {% if error %}
-                        <div class="alert alert-danger">
-                            {{ error.messageKey|trans(error.messageData, 'security') }}
-                        </div>
-                    {% endif %}
+    <section style="
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+    padding: 3rem 1rem;
+">
 
-                    {% if app.user %}
-                        <div class="mb-3">
-                            Vous êtes déjà connecté en tant que <strong>{{ app.user.userIdentifier }}</strong>.
-                            <a href="{{ path('app_logout') }}">Se déconnecter</a>
-                        </div>
-                    {% endif %}
+        {# Cercles décoratifs #}
+        <div aria-hidden="true" style="
+        position: absolute; top: -80px; right: -80px;
+        width: 380px; height: 380px; border-radius: 50%;
+        background: radial-gradient(circle, rgba(var(--accent-rgb),.07) 0%, transparent 70%);
+        pointer-events: none;
+    "></div>
+        <div aria-hidden="true" style="
+        position: absolute; bottom: -60px; left: -40px;
+        width: 260px; height: 260px; border-radius: 50%;
+        background: radial-gradient(circle, rgba(var(--accent-rgb),.04) 0%, transparent 70%);
+        pointer-events: none;
+    "></div>
 
-                    <form method="post">
-                        <div class="mb-3">
-                            <label for="inputEmail" class="form-label">Email</label>
-                            <input type="email" value="{{ last_username }}" name="email" id="inputEmail"
-                                   class="form-control" autocomplete="email" required autofocus>
-                        </div>
+        <div class="fade-up" style="width: 100%; max-width: 400px; position: relative;">
 
-                        <div class="mb-3">
-                            <label for="inputPassword" class="form-label">Mot de passe</label>
-                            <input type="password" name="password" id="inputPassword"
-                                   class="form-control" autocomplete="current-password" required>
-                        </div>
-
-                        <input type="hidden" name="_csrf_token"
-                               value="{{ csrf_token('authenticate') }}"
-                        >
-
-                        <button class="btn btn-primary w-100 mt-3" type="submit">
-                            Se connecter
-                        </button>
-                    </form>
-                </div>
+            {# Logo / Brand #}
+            <div class="text-center mb-4">
+                <div style="
+                display: inline-flex; align-items: center; justify-content: center;
+                width: 52px; height: 52px; border-radius: 1rem;
+                background: rgba(var(--accent-rgb),.1);
+                border: 1px solid rgba(var(--accent-rgb),.2);
+                font-family: var(--font-display); font-weight: 800;
+                font-size: 1.4rem; color: var(--accent);
+                margin-bottom: .75rem;
+            ">J</div>
+                <h1 style="font-size: 1.5rem; margin: 0 0 .3rem;">Connexion</h1>
+                <p class="text-muted" style="font-size: .875rem; font-weight: 300; margin: 0;">
+                    Espace d'administration du portfolio
+                </p>
             </div>
+
+            {# Déjà connecté #}
+            {% if app.user %}
+                <div class="card p-4 mb-3 text-center fade-up fade-up-delay-1">
+                    <p class="mb-2" style="font-size: .9rem;">
+                        Connecté en tant que <strong style="color: var(--accent);">{{ app.user.userIdentifier }}</strong>
+                    </p>
+                    <a href="{{ path('app_logout') }}" class="btn btn-outline-primary btn-sm">
+                        Se déconnecter
+                    </a>
+                </div>
+            {% endif %}
+
+            {# Erreur #}
+            {% if error %}
+                <div class="fade-up fade-up-delay-1 mb-3" style="
+                background: rgba(220,53,69,.08);
+                border: 1px solid rgba(220,53,69,.2);
+                border-radius: .75rem;
+                padding: .85rem 1rem;
+                font-size: .875rem;
+                color: #dc3545;
+                display: flex; align-items: flex-start; gap: .5rem;
+            ">
+                    <span style="flex-shrink:0; margin-top:.05rem;">⚠️</span>
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
+
+            {# Formulaire #}
+            <div class="card p-4 p-md-5 fade-up fade-up-delay-2">
+
+                <form method="post" novalidate>
+
+                    <div class="mb-3">
+                        <label for="inputEmail"
+                               style="font-size:.875rem;font-weight:500;display:block;margin-bottom:.35rem;color:var(--text);">
+                            Email
+                        </label>
+                        <input type="email"
+                               value="{{ last_username }}"
+                               name="email"
+                               id="inputEmail"
+                               class="form-control"
+                               placeholder="votre.email@exemple.com"
+                               autocomplete="email"
+                               required
+                               autofocus>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="inputPassword"
+                               style="font-size:.875rem;font-weight:500;display:block;margin-bottom:.35rem;color:var(--text);">
+                            Mot de passe
+                        </label>
+                        <div style="position: relative;">
+                            <input type="password"
+                                   name="password"
+                                   id="inputPassword"
+                                   class="form-control"
+                                   placeholder="••••••••"
+                                   autocomplete="current-password"
+                                   style="padding-right: 2.8rem;"
+                                   required>
+                            {# Toggle visibilité mot de passe #}
+                            <button type="button"
+                                    id="togglePassword"
+                                    style="
+                                    position: absolute; right: .75rem; top: 50%;
+                                    transform: translateY(-50%);
+                                    background: none; border: none; cursor: pointer;
+                                    color: var(--text-muted); font-size: .85rem; padding: 0;
+                                    line-height: 1;
+                                "
+                                    title="Afficher / masquer le mot de passe">
+                                👁
+                            </button>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                    <button type="submit" class="btn btn-primary w-100" style="padding: .7rem;">
+                        Se connecter →
+                    </button>
+
+                </form>
+            </div>
+
+            <p class="text-center text-muted mt-3 fade-up" style="font-size: .8rem;">
+                <a href="{{ path('home') }}" style="color: var(--text-muted);">← Retour au portfolio</a>
+            </p>
+
         </div>
-    </div>
+    </section>
+
+    <style>
+        .form-control {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: .6rem;
+            font-size: .9rem;
+            padding: .6rem .9rem;
+            transition: border-color .15s, box-shadow .15s;
+            width: 100%;
+        }
+
+        .form-control:focus {
+            background: var(--bg);
+            border-color: var(--accent);
+            color: var(--text);
+            box-shadow: 0 0 0 3px rgba(var(--accent-rgb), .15);
+            outline: none;
+        }
+
+        .form-control::placeholder { color: var(--text-muted); }
+    </style>
+
+    <script>
+        (function () {
+            const toggle = document.getElementById('togglePassword');
+            const input  = document.getElementById('inputPassword');
+            if (!toggle || !input) return;
+
+            toggle.addEventListener('click', function () {
+                const isHidden = input.type === 'password';
+                input.type = isHidden ? 'text' : 'password';
+                toggle.textContent = isHidden ? '🙈' : '👁';
+            });
+        })();
+    </script>
+
 {% endblock %}

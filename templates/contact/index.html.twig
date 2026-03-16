@@ -1,114 +1,235 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contact{% endblock %}
+{% block title %}Contact — Jérémy Decottignies{% endblock %}
 
 {% block body %}
-    <div class="row justify-content-center">
-        <div class="col-lg-10">
 
-            <div class="text-center mb-4">
-                <h1 class="mb-2">Me contacter</h1>
-                <p class="text-muted mb-0">
-                    Une question, une opportunité de stage ou d’alternance ? N’hésitez pas à m’écrire.
-                </p>
+    {# ═══════════════════════════════════════════════════════════
+   EN-TÊTE
+═══════════════════════════════════════════════════════════ #}
+    <section class="py-5" style="background: var(--bg); position: relative; overflow: hidden;">
+
+        <div aria-hidden="true" style="
+        position: absolute; top: -60px; right: -60px;
+        width: 320px; height: 320px; border-radius: 50%;
+        background: radial-gradient(circle, rgba(var(--accent-rgb),.07) 0%, transparent 70%);
+        pointer-events: none;
+    "></div>
+
+        <div class="container py-2 text-center">
+            <p class="section-label fade-up justify-content-center">Contact</p>
+            <h1 class="fade-up fade-up-delay-1 mb-3" style="font-size: clamp(1.8rem, 4vw, 2.6rem);">
+                Discutons ensemble
+            </h1>
+            <p class="fade-up fade-up-delay-2 text-muted mx-auto mb-0"
+               style="max-width: 480px; font-weight: 300; font-size: 1.05rem;">
+                Une question, une opportunité de stage ou d'alternance ?
+                Je réponds généralement sous 24 h.
+            </p>
+        </div>
+    </section>
+
+    {# ═══════════════════════════════════════════════════════════
+   FLASH MESSAGES
+═══════════════════════════════════════════════════════════ #}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="container mt-3">
+                <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert"
+                     style="border-radius: var(--radius-card); border: 1px solid var(--border);">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+                </div>
             </div>
+        {% endfor %}
+    {% endfor %}
 
-            {# Messages flash (succès, erreur, etc.) #}
-            {% for label, messages in app.flashes %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                {% endfor %}
-            {% endfor %}
+    {# ═══════════════════════════════════════════════════════════
+   FORMULAIRE + INFOS
+═══════════════════════════════════════════════════════════ #}
+    <section class="py-5 section-alt">
+        <div class="container">
+            <div class="row g-4 justify-content-center">
 
-            <div class="row g-4">
-                <div class="col-md-7">
-                    <div class="card shadow-sm border-0">
-                        <div class="card-body p-4">
-                            <h2 class="h5 mb-3">Envoyer un message</h2>
+                {# ── Formulaire ──────────────────────────────── #}
+                <div class="col-lg-7 reveal">
+                    <div class="card p-4 p-md-5">
+                        <p class="section-label mb-3">Formulaire</p>
+                        <h2 class="mb-4" style="font-size: 1.3rem;">Envoyer un message</h2>
 
-                            {{ form_start(contactForm) }}
-                            <div class="mb-3">
-                                {{ form_label(contactForm.nom, null, {'label_attr': {'class': 'form-label'}}) }}
-                                {{ form_widget(contactForm.nom, {
-                                    'attr': {'class': 'form-control', 'placeholder': 'Votre nom'}
-                                }) }}
+                        {{ form_start(contactForm, {'attr': {'novalidate': 'novalidate'}}) }}
+
+                        <div class="mb-3">
+                            {{ form_label(contactForm.nom, null, {
+                                'label_attr': {'class': 'form-label', 'style': 'font-size:.875rem;font-weight:500;color:var(--text);'}
+                            }) }}
+                            {{ form_widget(contactForm.nom, {
+                                'attr': {'class': 'form-control', 'placeholder': 'Votre nom complet'}
+                            }) }}
+                            <div style="color:#dc3545;font-size:.8rem;margin-top:.3rem;">
                                 {{ form_errors(contactForm.nom) }}
                             </div>
+                        </div>
 
-                            <div class="mb-3">
-                                {{ form_label(contactForm.email, null, {'label_attr': {'class': 'form-label'}}) }}
-                                {{ form_widget(contactForm.email, {
-                                    'attr': {'class': 'form-control', 'placeholder': 'votre.email@example.com'}
-                                }) }}
+                        <div class="mb-3">
+                            {{ form_label(contactForm.email, null, {
+                                'label_attr': {'class': 'form-label', 'style': 'font-size:.875rem;font-weight:500;color:var(--text);'}
+                            }) }}
+                            {{ form_widget(contactForm.email, {
+                                'attr': {'class': 'form-control', 'placeholder': 'votre.email@exemple.com'}
+                            }) }}
+                            <div style="color:#dc3545;font-size:.8rem;margin-top:.3rem;">
                                 {{ form_errors(contactForm.email) }}
                             </div>
+                        </div>
 
-                            <div class="mb-3">
-                                {{ form_label(contactForm.sujet, null, {'label_attr': {'class': 'form-label'}}) }}
-                                {{ form_widget(contactForm.sujet, {
-                                    'attr': {'class': 'form-control', 'placeholder': 'Sujet de votre message'}
-                                }) }}
+                        <div class="mb-3">
+                            {{ form_label(contactForm.sujet, null, {
+                                'label_attr': {'class': 'form-label', 'style': 'font-size:.875rem;font-weight:500;color:var(--text);'}
+                            }) }}
+                            {{ form_widget(contactForm.sujet, {
+                                'attr': {'class': 'form-control', 'placeholder': 'Sujet de votre message'}
+                            }) }}
+                            <div style="color:#dc3545;font-size:.8rem;margin-top:.3rem;">
                                 {{ form_errors(contactForm.sujet) }}
                             </div>
+                        </div>
 
-                            <div class="mb-3">
-                                {{ form_label(contactForm.message, null, {'label_attr': {'class': 'form-label'}}) }}
-                                {{ form_widget(contactForm.message, {
-                                    'attr': {'class': 'form-control', 'rows': 6, 'placeholder': 'Votre message...'}
-                                }) }}
+                        <div class="mb-4">
+                            {{ form_label(contactForm.message, null, {
+                                'label_attr': {'class': 'form-label', 'style': 'font-size:.875rem;font-weight:500;color:var(--text);'}
+                            }) }}
+                            {{ form_widget(contactForm.message, {
+                                'attr': {'class': 'form-control', 'rows': 6, 'placeholder': 'Décrivez votre projet, votre besoin…'}
+                            }) }}
+                            <div style="color:#dc3545;font-size:.8rem;margin-top:.3rem;">
                                 {{ form_errors(contactForm.message) }}
                             </div>
-
-                            <button class="btn btn-primary w-100 mt-2">
-                                Envoyer le message
-                            </button>
-                            {{ form_end(contactForm) }}
                         </div>
+
+                        <button type="submit" class="btn btn-primary w-100" style="padding: .7rem;">
+                            Envoyer le message →
+                        </button>
+
+                        {{ form_end(contactForm) }}
                     </div>
                 </div>
 
-                <div class="col-md-5">
-                    <div class="card shadow-sm border-0 h-100">
-                        <div class="card-body p-4">
-                            <h2 class="h5 mb-3">Informations</h2>
-                            <p class="text-muted">
-                                Vous pouvez aussi me contacter directement via les moyens suivants&nbsp;:
-                            </p>
+                {# ── Infos ────────────────────────────────────── #}
+                <div class="col-lg-4 reveal" style="transition-delay:.1s">
 
-                            <ul class="list-unstyled mb-4">
-                                <li class="mb-2">
-                                    <strong>Email :</strong>
-                                    <a href="mailto:jeremyDecottignies@outlook.com">
+                    {# Coordonnées #}
+                    <div class="card p-4 mb-4">
+                        <p class="section-label mb-3">Coordonnées</p>
+
+                        <div class="d-flex flex-column gap-3">
+
+                            <a href="mailto:jeremyDecottignies@outlook.com"
+                               class="d-flex align-items-center gap-3 text-decoration-none"
+                               style="color: var(--text);">
+                                <div style="
+                                width: 38px; height: 38px; flex-shrink: 0; border-radius: .6rem;
+                                background: rgba(var(--accent-rgb),.1);
+                                display: flex; align-items: center; justify-content: center;
+                                font-size: .9rem;
+                            ">✉️</div>
+                                <div>
+                                    <p style="font-size:.7rem;color:var(--text-muted);margin:0;">Email</p>
+                                    <p style="font-size:.875rem;font-weight:500;margin:0;color:var(--accent);">
                                         jeremyDecottignies@outlook.com
-                                    </a>
-                                </li>
-                                <li class="mb-2">
-                                    <strong>GitHub :</strong>
-                                    <a href="https://github.com/jeremyDecottignies" target="_blank">
-                                        github
-                                    </a>
-                                </li>
-                                <li class="mb-2">
-                                    <strong>LinkedIn :</strong>
-                                    <a href="#" target="_blank">
-                                        LinkedIn
-                                    </a>
-                                </li>
-                            </ul>
+                                    </p>
+                                </div>
+                            </a>
 
-                            <h2 class="h6 text-muted mb-2">Disponibilité</h2>
-                            <p class="text-muted small mb-0">
-                                Ouvert aux stages, alternances et projets liés au BTS SIO.<br>
-                                N’hésitez pas à préciser votre besoin dans le message.
-                            </p>
+                            <a href="https://github.com/jeremyDecottignies" target="_blank" rel="noopener"
+                               class="d-flex align-items-center gap-3 text-decoration-none"
+                               style="color: var(--text);">
+                                <div style="
+                                width: 38px; height: 38px; flex-shrink: 0; border-radius: .6rem;
+                                background: rgba(var(--accent-rgb),.1);
+                                display: flex; align-items: center; justify-content: center;
+                                font-size: .9rem;
+                            ">🐙</div>
+                                <div>
+                                    <p style="font-size:.7rem;color:var(--text-muted);margin:0;">GitHub</p>
+                                    <p style="font-size:.875rem;font-weight:500;margin:0;color:var(--accent);">
+                                        github.com/jeremyDecottignies
+                                    </p>
+                                </div>
+                            </a>
+
+                            <a href="#" target="_blank" rel="noopener"
+                               class="d-flex align-items-center gap-3 text-decoration-none"
+                               style="color: var(--text);">
+                                <div style="
+                                width: 38px; height: 38px; flex-shrink: 0; border-radius: .6rem;
+                                background: rgba(var(--accent-rgb),.1);
+                                display: flex; align-items: center; justify-content: center;
+                                font-size: .9rem;
+                            ">💼</div>
+                                <div>
+                                    <p style="font-size:.7rem;color:var(--text-muted);margin:0;">LinkedIn</p>
+                                    <p style="font-size:.875rem;font-weight:500;margin:0;color:var(--accent);">
+                                        Voir le profil →
+                                    </p>
+                                </div>
+                            </a>
+
                         </div>
                     </div>
+
+                    {# Disponibilité #}
+                    <div class="card p-4">
+                        <div class="d-flex align-items-center gap-2 mb-3">
+                        <span style="
+                            width: 8px; height: 8px; border-radius: 50%;
+                            background: #16a34a;
+                            animation: heroPulse 2s infinite;
+                            flex-shrink: 0;
+                        "></span>
+                            <p class="mb-0" style="font-size:.875rem;font-weight:600;">Disponible</p>
+                        </div>
+                        <p class="text-muted mb-0" style="font-size:.875rem;line-height:1.7;font-weight:300;">
+                            Ouvert aux <strong style="color:var(--text);font-weight:500;">stages</strong> et
+                            <strong style="color:var(--text);font-weight:500;">alternances</strong>
+                            en développement web.<br>
+                            N'hésitez pas à préciser votre besoin dans le message.
+                        </p>
+                    </div>
+
                 </div>
             </div>
-
         </div>
-    </div>
+    </section>
+
+    {# Réutilise l'animation heroPulse définie dans base (ou redéfinie ici si besoin) #}
+    <style>
+        @keyframes heroPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50%       { opacity: .5; transform: scale(1.4); }
+        }
+
+        .form-control {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: .6rem;
+            font-size: .9rem;
+            padding: .6rem .9rem;
+            transition: border-color .15s, box-shadow .15s;
+        }
+
+        .form-control:focus {
+            background: var(--bg);
+            border-color: var(--accent);
+            color: var(--text);
+            box-shadow: 0 0 0 3px rgba(var(--accent-rgb), .15);
+            outline: none;
+        }
+
+        .form-control::placeholder { color: var(--text-muted); }
+
+        .form-label { margin-bottom: .35rem; }
+    </style>
+
 {% endblock %}
