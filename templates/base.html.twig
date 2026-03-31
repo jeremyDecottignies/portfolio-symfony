@@ -4,7 +4,25 @@
     <meta charset="UTF-8">
     <title>{% block title %}Portfolio — Decottignies Jérémy{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Portfolio de Jérémy Decottignies, étudiant BTS SIO — développeur web Symfony & PHP.">
+
+    {# ── SEO ───────────────────────────────────────────────── #}
+    <meta name="description" content="{% block meta_description %}Portfolio de Jérémy Decottignies, étudiant BTS SIO — développeur web Symfony & PHP. Découvrez mes projets et compétences.{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}portfolio, développeur web, Symfony, PHP, BTS SIO, Jérémy Decottignies, Nantes{% endblock %}">
+    <meta name="author" content="Decottignies Jérémy">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ app.request.uri }}">
+
+    {# ── Open Graph (partage réseaux sociaux) ──────────────── #}
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Portfolio — Jérémy Decottignies">
+    <meta property="og:title" content="{% block og_title %}Portfolio — Jérémy Decottignies{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Étudiant BTS SIO, développeur web Symfony & PHP. Découvrez mes projets.{% endblock %}">
+    <meta property="og:url" content="{{ app.request.uri }}">
+
+    {# ── Twitter Card ──────────────────────────────────────── #}
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{% block twitter_title %}Portfolio — Jérémy Decottignies{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Étudiant BTS SIO, développeur web Symfony & PHP.{% endblock %}">
 
     {# Fonts #}
     <link rel="preconnect" href="https://fonts.googleapis.com">
