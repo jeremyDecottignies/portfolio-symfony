@@ -46,9 +46,16 @@ class Project
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $displayMode = null;
 
+    /**
+     * @var Collection<int, Competence>
+     */
+    #[ORM\ManyToMany(targetEntity: Competence::class, inversedBy: 'projects')]
+    private Collection $competences;
+
     public function __construct()
     {
         $this->projectImages = new ArrayCollection();
+        $this->competences = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -182,6 +189,30 @@ class Project
     public function setDisplayMode(?string $displayMode): static
     {
         $this->displayMode = $displayMode;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Competence>
+     */
+    public function getCompetences(): Collection
+    {
+        return $this->competences;
+    }
+
+    public function addCompetence(Competence $competence): static
+    {
+        if (!$this->competences->contains($competence)) {
+            $this->competences->add($competence);
+        }
+
+        return $this;
+    }
+
+    public function removeCompetence(Competence $competence): static
+    {
+        $this->competences->removeElement($competence);
 
         return $this;
     }

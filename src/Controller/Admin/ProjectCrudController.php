@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class ProjectCrudController extends AbstractCrudController
 {
@@ -49,6 +50,10 @@ class ProjectCrudController extends AbstractCrudController
                 ])
                 ->setRequired(false)
                 ->setHelp('Choisir comment afficher les images du projet'),
+
+            AssociationField::new('competences')
+                ->setLabel('Compétences BTS SIO')
+                ->setRequired(false),
         ];
     }
 }

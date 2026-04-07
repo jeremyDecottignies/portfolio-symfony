@@ -12,6 +12,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Entity\Education;
+use App\Entity\Competence;
 
 
 #[IsGranted("ROLE_ADMIN")]
@@ -36,5 +37,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Images projets', 'fa fa-image', ProjectImage::class);
         yield MenuItem::linkToCrud('Experiences', 'fa fa-briefcase', Experience::class);
         yield MenuItem::linkToCrud('Parcours scolaire', 'fa fa-graduation-cap', Education::class);
+        yield MenuItem::linkToCrud('Compétences', 'fa fa-graduation-cap', Competence::class);
     }
 }
