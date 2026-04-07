@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Experience;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -21,10 +22,12 @@ class ExperienceCrudController extends AbstractCrudController
             TextField::new('titre', 'Titre'),
             TextField::new('entreprise', 'Entreprise'),
             TextField::new('lieu', 'Lieu'),
-            TextField::new('type', 'Type'), // Stage / Alternance / Projet perso
+            TextField::new('type', 'Type'),
             DateField::new('dateDebut', 'Début'),
             DateField::new('dateFin', 'Fin')->setRequired(false),
             TextEditorField::new('description', 'Description'),
+            AssociationField::new('competences', 'Compétences BTS SIO')
+                ->setRequired(false),
         ];
     }
 }
