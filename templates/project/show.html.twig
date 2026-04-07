@@ -58,22 +58,96 @@
     </section>
 
     {# ═══════════════════════════════════════════════════════════
-   IMAGE DU PROJET
+   IMAGES DU PROJET
 ═══════════════════════════════════════════════════════════ #}
+
+    {% set allImages = [] %}
     {% if project.image %}
+        {% set allImages = allImages|merge([{src: 'uploads/images/projects/' ~ project.image, alt: project.nom}]) %}
+    {% endif %}
+    {% for img in project.projectImages %}
+        {% set allImages = allImages|merge([{src: 'uploads/images/projects/' ~ img.filename, alt: project.nom ~ ' - image ' ~ loop.index}]) %}
+    {% endfor %}
+
+    {% if allImages|length > 0 %}
         <section style="background: var(--bg-section); padding: 2rem 0;">
             <div class="container">
-                <div class="reveal" style="
-            border-radius: 1.25rem;
-            overflow: hidden;
-            border: 1px solid var(--border);
-            box-shadow: 0 16px 48px rgba(0,0,0,0.08);
-        ">
-                    <img src="{{ asset('uploads/images/projects/' ~ project.image) }}"
-                         alt="{{ project.nom }}"
-                         class="img-fluid d-block w-100"
-                         style="max-height: 520px; object-fit: cover;">
-                </div>
+
+                {% if allImages|length == 1 %}
+                    <div class="reveal" style="
+                border-radius: 1.25rem;
+                overflow: hidden;
+                border: 1px solid var(--border);
+                box-shadow: 0 16px 48px rgba(0,0,0,0.08);
+            ">
+                        <img src="{{ asset(allImages[0].src) }}"
+                             alt="{{ allImages[0].alt }}"
+                             class="img-fluid d-block w-100"
+                             style="max-height: 520px; object-fit: cover;">
+                    </div>
+
+                {% else %}
+                    <div id="projectCarousel" class="carousel slide reveal" data-bs-ride="carousel" style="
+                border-radius: 1.25rem;
+                overflow: hidden;
+                border: 1px solid var(--border);
+                box-shadow: 0 16px 48px rgba(0,0,0,0.08);
+            ">
+                        <div class="carousel-indicators">
+                            {% for img in allImages %}
+                                <button type="button"
+                                        data-bs-target="#projectCarousel"
+                                        data-bs-slide-to="{{ loop.index0 }}"
+                                        {% if loop.first %}class="active" aria-current="true"{% endif %}
+                                        aria-label="Image {{ loop.index }}">
+                                </button>
+                            {% endfor %}
+                        </div>
+
+                        <div class="carousel-inner">
+                            {% for img in allImages %}
+                                <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                    <img src="{{ asset(img.src) }}"
+                                         alt="{{ img.alt }}"
+                                         class="d-block w-100"
+                                         style="max-height: 520px; object-fit: cover;">
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <button class="carousel-control-prev" type="button"
+                                data-bs-target="#projectCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                            <span class="visually-hidden">Précédent</span>
+                        </button>
+                        <button class="carousel-control-next" type="button"
+                                data-bs-target="#projectCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                            <span class="visually-hidden">Suivant</span>
+                        </button>
+                    </div>
+
+                    {# Miniatures #}
+                    <div class="d-flex gap-2 mt-3 flex-wrap">
+                        {% for img in allImages %}
+                            <img src="{{ asset(img.src) }}"
+                                 alt="{{ img.alt }}"
+                                 data-bs-target="#projectCarousel"
+                                 data-bs-slide-to="{{ loop.index0 }}"
+                                 style="
+                            width: 80px; height: 56px;
+                            object-fit: cover;
+                            border-radius: .5rem;
+                            border: 2px solid var(--border);
+                            cursor: pointer;
+                            transition: border-color .2s, transform .2s;
+                         "
+                                 onmouseover="this.style.borderColor='rgba(var(--accent-rgb),.5)';this.style.transform='scale(1.05)'"
+                                 onmouseout="this.style.borderColor='var(--border)';this.style.transform='scale(1)'">
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
             </div>
         </section>
     {% endif %}
@@ -85,21 +159,14 @@
         <div class="container">
             <div class="row g-5">
 
-                {# Description détaillée #}
                 <div class="col-lg-8 reveal">
                     <p class="section-label">Description</p>
                     <h2 class="mb-4" style="font-size: 1.5rem;">À propos du projet</h2>
-
-                    <div style="
-                    font-size: .95rem;
-                    line-height: 1.85;
-                    color: var(--text-muted);
-                " class="project-content">
+                    <div style="font-size: .95rem; line-height: 1.85; color: var(--text-muted);" class="project-content">
                         {{ project.description|raw }}
                     </div>
                 </div>
 
-                {# Sidebar infos #}
                 <div class="col-lg-4 reveal" style="transition-delay:.1s">
                     <div class="card p-4" style="position: sticky; top: 5rem;">
 
@@ -118,6 +185,13 @@
                                     </a>
                                 </dd>
                             {% endif %}
+
+                            {% if allImages|length > 0 %}
+                                <dt style="color: var(--text-muted); font-weight: 400; margin-bottom: .2rem;">Photos</dt>
+                                <dd style="margin-bottom: 1rem;">
+                                    <span class="tech-badge">{{ allImages|length }} image(s)</span>
+                                </dd>
+                            {% endif %}
                         </dl>
 
                         <hr style="border-color: var(--border); margin: .5rem 0 1rem;">
@@ -133,9 +207,6 @@
         </div>
     </section>
 
-    {# ═══════════════════════════════════════════════════════════
-   STYLES POUR LE CONTENU RICH TEXT
-═══════════════════════════════════════════════════════════ #}
     <style>
         .project-content h2,
         .project-content h3 {
@@ -148,7 +219,6 @@
 
         .project-content h2 { font-size: 1.3rem; }
         .project-content h3 { font-size: 1.1rem; }
-
         .project-content p { margin-bottom: 1.1rem; }
 
         .project-content ul,
@@ -158,7 +228,6 @@
         }
 
         .project-content li { margin-bottom: .35rem; }
-
         .project-content a { color: var(--accent); }
 
         .project-content code {
@@ -179,6 +248,15 @@
         }
 
         .breadcrumb-item + .breadcrumb-item::before { color: var(--text-muted); }
+
+        .carousel-indicators button {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.5);
+            border: none;
+        }
+
+        .carousel-indicators button.active { background: #fff; }
     </style>
 
 {% endblock %}
