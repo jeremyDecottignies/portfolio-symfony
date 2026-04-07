@@ -220,12 +220,12 @@ class Project
         return $this;
     }
 
-    public function getPdfFile(): ?string
+    public function getPdffile(): ?string
     {
         return $this->pdfFile;
     }
 
-    public function setPdfFile(?string $pdfFile): static
+    public function setPdffile(?string $pdfFile): static
     {
         $this->pdffile = $pdfFile;
 
