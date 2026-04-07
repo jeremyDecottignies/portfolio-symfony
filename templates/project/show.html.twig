@@ -276,6 +276,15 @@
         }
 
         .carousel-indicators button.active { background: #fff; }
+        .carousel-item.active,
+        .carousel-item-next,
+        .carousel-item-prev {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            height: 500px;
+            background: var(--bg-section);
+        }
     </style>
 
 {% endblock %}
