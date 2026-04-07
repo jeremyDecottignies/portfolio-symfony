@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\FileField;
 
 class ProjectCrudController extends AbstractCrudController
 {
@@ -56,12 +55,10 @@ class ProjectCrudController extends AbstractCrudController
                 ->setLabel('Compétences BTS SIO')
                 ->setRequired(false),
 
-            FileField::new('pdfFile')
-                ->setLabel('Fichier PDF')
-                ->setUploadDir('public/uploads/pdf/projects')
-                ->setBasePath('uploads/pdf/projects')
-                ->setUploadedFileNamePattern('[slug]-[timestamp].[extension]')
-                ->setRequired(false),
+            TextField::new('pdfFile')
+                ->setLabel('Fichier PDF (nom du fichier)')
+                ->setRequired(false)
+                ->setHelp('Uploader le fichier dans public/uploads/pdf/projects/ puis entrer son nom ici'),
         ];
     }
 }
