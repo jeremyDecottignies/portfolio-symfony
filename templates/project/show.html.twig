@@ -266,10 +266,19 @@
         .carousel-indicators button.active { background: #fff; }
 
         .carousel-item {
-            min-height: 300px;
-            display: flex;
+            height: 650px;
+            background: var(--bg-section);
+            display: flex !important;
             align-items: center;
             justify-content: center;
+        }
+
+        .carousel-item img {
+            max-height: 650px;
+            max-width: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
         }
     </style>
 
