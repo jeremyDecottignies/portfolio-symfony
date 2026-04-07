@@ -85,7 +85,7 @@
                         <img src="{{ asset(allImages[0].src) }}"
                              alt="{{ allImages[0].alt }}"
                              class="img-fluid d-block mx-auto"
-                             style="max-height: 650px; width: auto; object-fit: contain;">
+                             style="max-height: 650px; max-width: auto; object-fit: contain;">
                     </div>
 
                 {% else %}
@@ -115,7 +115,7 @@
                                     <img src="{{ asset(img.src) }}"
                                          alt="{{ img.alt }}"
                                          class="d-block mx-auto"
-                                         style="max-height: 650px; width: auto; object-fit: contain;">
+                                         style="max-height: 650px; max-width: auto; object-fit: contain;">
                                 </div>
                             {% endfor %}
                         </div>
