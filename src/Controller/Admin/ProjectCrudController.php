@@ -68,4 +68,16 @@ class ProjectCrudController extends AbstractCrudController
                 ->setRequired(false),
         ];
     }
+
+    public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        // Récupère l'ancienne valeur du pdffile avant écrasement
+        $originalData = $entityManager->getUnitOfWork()->getOriginalEntityData($entityInstance);
+
+        if (empty($entityInstance->getPdffile()) && !empty($originalData['pdffile'])) {
+            $entityInstance->setPdffile($originalData['pdffile']);
+        }
+
+        parent::updateEntity($entityManager, $entityInstance);
+    }
 }
