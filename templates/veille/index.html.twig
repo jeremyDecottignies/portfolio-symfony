@@ -28,6 +28,40 @@
             overflow-x: hidden;
         }
 
+        /* ── Light mode ── */
+        body:not(.dark-mode) .veille-wrap {
+            --vbg:     #f5f7fb;
+            --vbg2:    #ffffff;
+            --vtext:   #111827;
+            --vmuted:  #6b7280;
+            --vacc:    #2563eb;
+            --vacc2:   #7c3aed;
+            --vacc3:   #059669;
+            --vacc4:   #d97706;
+            --vacc5:   #db2777;
+            --vborder: rgba(17,24,39,0.10);
+        }
+
+        /* ── Light mode grille de fond ── */
+        body:not(.dark-mode) .veille-wrap::before {
+            background-image:
+                linear-gradient(rgba(37,99,235,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(37,99,235,0.04) 1px, transparent 1px);
+        }
+
+        /* ── Light mode sous-nav ── */
+        body:not(.dark-mode) .veille-subnav {
+            background: rgba(245,247,251,0.9);
+        }
+
+        /* ── Light mode gradients texte ── */
+        body:not(.dark-mode) .v-gradient {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
         /* Grille de fond */
         .veille-wrap::before {
             content: '';
