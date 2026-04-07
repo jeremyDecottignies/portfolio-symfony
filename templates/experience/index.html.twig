@@ -18,7 +18,6 @@
 
         <div class="container py-2">
 
-            {# Fil d'Ariane #}
             <nav aria-label="breadcrumb" class="fade-up mb-4">
                 <ol class="breadcrumb mb-0" style="font-size: .8rem;">
                     <li class="breadcrumb-item">
@@ -77,6 +76,72 @@
     </section>
 
     {# ═══════════════════════════════════════════════════════════
+   IMAGES
+═══════════════════════════════════════════════════════════ #}
+    {% if experience.experienceImages|length > 0 %}
+        <section style="background: var(--bg-section); padding: 2rem 0;">
+            <div class="container">
+
+                <p class="section-label mb-3">Captures & Réalisations</p>
+
+                <div class="reveal" style="
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1rem;
+        ">
+                    {% for img in experience.experienceImages %}
+                        <div style="
+                    background: var(--bg);
+                    border: 1px solid var(--border);
+                    border-radius: 1rem;
+                    overflow: hidden;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: .75rem;
+                    min-height: 220px;
+                    transition: border-color .2s, transform .2s;
+                "
+                             onmouseover="this.style.borderColor='rgba(var(--accent-rgb),.4)';this.style.transform='translateY(-3px)'"
+                             onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+                            <img src="{{ asset('uploads/images/experiences/' ~ img.filename) }}"
+                                 alt="{{ experience.titre }} - image {{ loop.index }}"
+                                 style="max-width: 100%; max-height: 300px; object-fit: contain; border-radius: .5rem;"
+                                 onclick="openLightbox('{{ asset('uploads/images/experiences/' ~ img.filename) }}', '{{ experience.titre }}')"
+                                 class="exp-img-clickable">
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </section>
+
+        {# Lightbox #}
+        <div id="lightbox" style="
+    display: none;
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(0,0,0,.92);
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+" onclick="closeLightbox()">
+            <img id="lightbox-img" src="" alt=""
+                 style="max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: .75rem;">
+            <button onclick="closeLightbox()" style="
+        position: absolute; top: 1.5rem; right: 1.5rem;
+        background: rgba(255,255,255,.1);
+        border: 1px solid rgba(255,255,255,.2);
+        color: #fff;
+        width: 40px; height: 40px;
+        border-radius: 50%;
+        font-size: 1.2rem;
+        cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+    ">✕</button>
+        </div>
+    {% endif %}
+
+    {# ═══════════════════════════════════════════════════════════
    CONTENU PRINCIPAL
 ═══════════════════════════════════════════════════════════ #}
     <section class="py-5" style="background: var(--bg);">
@@ -120,6 +185,13 @@
                                     – <span style="color: #16a34a; font-weight: 600;">En cours</span>
                                 {% endif %}
                             </dd>
+
+                            {% if experience.experienceImages|length > 0 %}
+                                <dt style="color: var(--text-muted); font-weight: 400; margin-bottom: .2rem;">Photos</dt>
+                                <dd style="margin-bottom: 1rem;">
+                                    <span class="tech-badge">{{ experience.experienceImages|length }} image(s)</span>
+                                </dd>
+                            {% endif %}
                         </dl>
 
                         {# Compétences BTS SIO #}
@@ -163,6 +235,13 @@
     </section>
 
     <style>
+        .exp-img-clickable {
+            cursor: zoom-in;
+            transition: transform .2s;
+        }
+
+        .exp-img-clickable:hover { transform: scale(1.02); }
+
         .exp-content h2,
         .exp-content h3 {
             font-family: var(--font-display);
@@ -209,5 +288,25 @@
 
         .breadcrumb-item + .breadcrumb-item::before { color: var(--text-muted); }
     </style>
+
+    <script>
+        function openLightbox(src, alt) {
+            const lb = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            img.src = src;
+            img.alt = alt;
+            lb.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+    </script>
 
 {% endblock %}
