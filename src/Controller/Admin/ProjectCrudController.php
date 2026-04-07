@@ -58,7 +58,14 @@ class ProjectCrudController extends AbstractCrudController
             TextField::new('pdffile')
                 ->setLabel('Fichier PDF (nom du fichier)')
                 ->setRequired(false)
-                ->setHelp('Uploader le fichier dans public/uploads/pdf/projects/ puis entrer son nom ici'),
+                ->setHelp('Uploader le fichier dans public/uploads/pdf/projects/ puis entrer son nom ici')
+                ->setFormTypeOption('empty_data', '')
+                ->onlyOnForms(),
+
+            TextField::new('pdffile')
+                ->setLabel('PDF')
+                ->onlyOnIndex()
+                ->setRequired(false),
         ];
     }
 }
