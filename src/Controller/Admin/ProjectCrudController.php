@@ -15,6 +15,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 
 class ProjectCrudController extends AbstractCrudController
 {
@@ -39,6 +40,15 @@ class ProjectCrudController extends AbstractCrudController
                 ->setUploadedFileNamePattern('[slug]-[timestamp].[extension]')
                 ->setRequired(false)
                 ->setHelp('Image principale du projet'),
+
+            ChoiceField::new('displayMode')
+                ->setLabel('Mode d\'affichage des images')
+                ->setChoices([
+                    'Grille (toutes visibles)' => 'grid',
+                    'Avant / Après côte à côte' => 'comparison',
+                ])
+                ->setRequired(false)
+                ->setHelp('Choisir comment afficher les images du projet'),
         ];
     }
 }

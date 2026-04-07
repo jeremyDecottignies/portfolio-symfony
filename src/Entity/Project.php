@@ -43,6 +43,9 @@ class Project
     #[ORM\OneToMany(targetEntity: ProjectImage::class, mappedBy: 'project', orphanRemoval: true)]
     private Collection $projectImages;
 
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $displayMode = null;
+
     public function __construct()
     {
         $this->projectImages = new ArrayCollection();
@@ -169,6 +172,18 @@ class Project
     public function __toString(): string
     {
         return $this->nom ?? '';
+    }
+
+    public function getDisplayMode(): ?string
+    {
+        return $this->displayMode;
+    }
+
+    public function setDisplayMode(?string $displayMode): static
+    {
+        $this->displayMode = $displayMode;
+
+        return $this;
     }
 
 }
