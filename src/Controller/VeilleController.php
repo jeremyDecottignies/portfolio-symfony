@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class VeilleController extends AbstractController
 {
-    #[Route('/veille/controler', name: 'app_veille_controler')]
+    #[Route('/veille', name: 'app_veille_controler')]
     public function index(): Response
     {
         return $this->render('veille_controler/index.html.twig', [
