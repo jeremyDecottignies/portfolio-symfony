@@ -52,6 +52,9 @@ class Project
     #[ORM\ManyToMany(targetEntity: Competence::class, inversedBy: 'projects')]
     private Collection $competences;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $pdffile = null;
+
     public function __construct()
     {
         $this->projectImages = new ArrayCollection();
@@ -213,6 +216,18 @@ class Project
     public function removeCompetence(Competence $competence): static
     {
         $this->competences->removeElement($competence);
+
+        return $this;
+    }
+
+    public function getPdffile(): ?string
+    {
+        return $this->pdffile;
+    }
+
+    public function setPdffile(?string $pdffile): static
+    {
+        $this->pdffile = $pdffile;
 
         return $this;
     }
