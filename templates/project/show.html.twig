@@ -98,7 +98,6 @@
                 overflow: hidden;
                 border: 1px solid var(--border);
                 box-shadow: 0 16px 48px rgba(0,0,0,0.08);
-                background: var(--bg-section);
             ">
                         <div class="carousel-indicators">
                             {% for img in allImages %}
@@ -113,16 +112,19 @@
 
                         <div class="carousel-inner">
                             {% for img in allImages %}
-                                <div class="carousel-item {% if loop.first %}active{% endif %}" style="
-                            height: 500px;
-                            background: var(--bg-section);
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                        ">
-                                    <img src="{{ asset(img.src) }}"
-                                         alt="{{ img.alt }}"
-                                         style="max-height: 500px; max-width: 100%; object-fit: contain;">
+                                <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                    <div style="
+                                height: 500px;
+                                width: 100%;
+                                background: var(--bg-section);
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            ">
+                                        <img src="{{ asset(img.src) }}"
+                                             alt="{{ img.alt }}"
+                                             style="max-height: 500px; max-width: 100%; object-fit: contain;">
+                                    </div>
                                 </div>
                             {% endfor %}
                         </div>
@@ -269,23 +271,14 @@
         .breadcrumb-item + .breadcrumb-item::before { color: var(--text-muted); }
 
         .carousel-indicators button {
-            width: 8px; height: 8px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             background: rgba(255,255,255,.5);
             border: none;
         }
 
         .carousel-indicators button.active { background: #fff; }
-
-        .carousel-item.active,
-        .carousel-item-next,
-        .carousel-item-prev {
-            display: flex !important;
-            align-items: center;
-            justify-content: center;
-            height: 500px;
-            background: var(--bg-section);
-        }
     </style>
 
 {% endblock %}
