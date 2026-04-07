@@ -43,6 +43,9 @@ class Experience
     #[ORM\ManyToMany(targetEntity: Competence::class, inversedBy: 'experiences')]
     private Collection $competences;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $courteDescription = null;
+
     public function __construct()
     {
         $this->competences = new ArrayCollection();
@@ -157,6 +160,18 @@ class Experience
     public function removeCompetence(Competence $competence): static
     {
         $this->competences->removeElement($competence);
+
+        return $this;
+    }
+
+    public function getCourteDescription(): ?string
+    {
+        return $this->courteDescription;
+    }
+
+    public function setCourteDescription(?string $courteDescription): static
+    {
+        $this->courteDescription = $courteDescription;
 
         return $this;
     }

@@ -28,6 +28,7 @@ class ExperienceCrudController extends AbstractCrudController
             TextEditorField::new('description', 'Description'),
             AssociationField::new('competences', 'Compétences BTS SIO')
                 ->setRequired(false),
+            TextField::new('courteDescription', 'Description courte')->setRequired(false),
         ];
     }
 }

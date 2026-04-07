@@ -1,0 +1,213 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ experience.titre }} — {{ experience.entreprise }}{% endblock %}
+
+{% block body %}
+
+    {# ═══════════════════════════════════════════════════════════
+   EN-TÊTE EXPÉRIENCE
+═══════════════════════════════════════════════════════════ #}
+    <section class="py-5" style="background: var(--bg); position: relative; overflow: hidden;">
+
+        <div aria-hidden="true" style="
+        position: absolute; top: -60px; right: -60px;
+        width: 320px; height: 320px; border-radius: 50%;
+        background: radial-gradient(circle, rgba(var(--accent-rgb),.07) 0%, transparent 70%);
+        pointer-events: none;
+    "></div>
+
+        <div class="container py-2">
+
+            {# Fil d'Ariane #}
+            <nav aria-label="breadcrumb" class="fade-up mb-4">
+                <ol class="breadcrumb mb-0" style="font-size: .8rem;">
+                    <li class="breadcrumb-item">
+                        <a href="{{ path('home') }}" style="color: var(--text-muted);">Accueil</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ path('about') }}" style="color: var(--text-muted);">À propos</a>
+                    </li>
+                    <li class="breadcrumb-item active" style="color: var(--text-muted);">{{ experience.titre }}</li>
+                </ol>
+            </nav>
+
+            <div class="row gy-4 align-items-start">
+                <div class="col-lg-8">
+
+                    <div class="d-flex flex-wrap align-items-center gap-2 mb-3 fade-up">
+                        <span class="tech-badge">{{ experience.type }}</span>
+                        {% if not experience.dateFin %}
+                            <span style="
+                            font-size: .7rem; font-weight: 600; padding: .2rem .6rem;
+                            border-radius: 999px;
+                            background: rgba(22,163,74,.12); color: #16a34a;
+                            border: 1px solid rgba(22,163,74,.2);
+                        ">En cours</span>
+                        {% endif %}
+                    </div>
+
+                    <h1 class="fade-up fade-up-delay-1 mb-2" style="font-size: clamp(1.8rem, 4vw, 2.8rem);">
+                        {{ experience.titre }}
+                    </h1>
+
+                    <p class="fade-up fade-up-delay-2 mb-1" style="font-size: 1.1rem; color: var(--accent); font-weight: 500;">
+                        {{ experience.entreprise }}
+                    </p>
+
+                    <p class="fade-up fade-up-delay-2 mb-4" style="font-size: .9rem; color: var(--text-muted);">
+                        {{ experience.lieu }} ·
+                        {{ experience.dateDebut|date('m/Y') }}
+                        {% if experience.dateFin %} – {{ experience.dateFin|date('m/Y') }}{% endif %}
+                    </p>
+
+                    {% if experience.courteDescription %}
+                        <p class="fade-up fade-up-delay-3 mb-4" style="font-size: 1.05rem; color: var(--text-muted); font-weight: 300; max-width: 580px;">
+                            {{ experience.courteDescription }}
+                        </p>
+                    {% endif %}
+
+                    <div class="fade-up fade-up-delay-3">
+                        <a href="{{ path('about') }}" class="btn btn-outline-primary">
+                            ← Retour à propos
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# ═══════════════════════════════════════════════════════════
+   CONTENU PRINCIPAL
+═══════════════════════════════════════════════════════════ #}
+    <section class="py-5" style="background: var(--bg);">
+        <div class="container">
+            <div class="row g-5">
+
+                {# Description détaillée #}
+                <div class="col-lg-8 reveal">
+                    <p class="section-label">Détail</p>
+                    <h2 class="mb-4" style="font-size: 1.5rem;">Déroulement de l'expérience</h2>
+
+                    <div class="exp-content" style="font-size: .95rem; line-height: 1.85; color: var(--text-muted);">
+                        {{ experience.description|raw }}
+                    </div>
+                </div>
+
+                {# Sidebar #}
+                <div class="col-lg-4 reveal" style="transition-delay:.1s">
+                    <div class="card p-4" style="position: sticky; top: 5rem;">
+
+                        <p class="section-label mb-3">Informations</p>
+
+                        <dl style="font-size: .875rem;">
+                            <dt style="color: var(--text-muted); font-weight: 400; margin-bottom: .2rem;">Entreprise</dt>
+                            <dd style="font-weight: 600; margin-bottom: 1rem;">{{ experience.entreprise }}</dd>
+
+                            <dt style="color: var(--text-muted); font-weight: 400; margin-bottom: .2rem;">Lieu</dt>
+                            <dd style="margin-bottom: 1rem;">{{ experience.lieu }}</dd>
+
+                            <dt style="color: var(--text-muted); font-weight: 400; margin-bottom: .2rem;">Type</dt>
+                            <dd style="margin-bottom: 1rem;">
+                                <span class="tech-badge">{{ experience.type }}</span>
+                            </dd>
+
+                            <dt style="color: var(--text-muted); font-weight: 400; margin-bottom: .2rem;">Période</dt>
+                            <dd style="margin-bottom: 1rem;">
+                                {{ experience.dateDebut|date('d/m/Y') }}
+                                {% if experience.dateFin %}
+                                    – {{ experience.dateFin|date('d/m/Y') }}
+                                {% else %}
+                                    – <span style="color: #16a34a; font-weight: 600;">En cours</span>
+                                {% endif %}
+                            </dd>
+                        </dl>
+
+                        {# Compétences BTS SIO #}
+                        {% if experience.competences|length > 0 %}
+                            <hr style="border-color: var(--border); margin: .5rem 0 1rem;">
+
+                            <p style="font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--text-muted); margin-bottom: .75rem;">
+                                Compétences BTS SIO
+                            </p>
+
+                            <div class="d-flex flex-column gap-2">
+                                {% for competence in experience.competences %}
+                                    <div style="
+                                    display: flex; align-items: center; gap: .6rem;
+                                    padding: .5rem .75rem;
+                                    border-radius: .6rem;
+                                    background: rgba(var(--accent-rgb),.06);
+                                    border: 1px solid rgba(var(--accent-rgb),.15);
+                                ">
+                                    <span style="
+                                        font-size: .72rem; font-weight: 700;
+                                        color: var(--accent);
+                                        min-width: 24px;
+                                    ">{{ competence.code }}</span>
+                                        <span style="font-size: .8rem; color: var(--text-muted);">{{ competence.libelle }}</span>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <hr style="border-color: var(--border); margin: 1rem 0;">
+
+                        <a href="{{ path('about') }}" style="font-size: .8rem; color: var(--text-muted);">
+                            ← Retour à propos
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .exp-content h2,
+        .exp-content h3 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--text);
+            margin-top: 2rem;
+            margin-bottom: .75rem;
+        }
+
+        .exp-content h2 { font-size: 1.3rem; }
+        .exp-content h3 { font-size: 1.1rem; }
+        .exp-content p { margin-bottom: 1.1rem; }
+
+        .exp-content ul,
+        .exp-content ol {
+            padding-left: 1.4rem;
+            margin-bottom: 1.1rem;
+        }
+
+        .exp-content li { margin-bottom: .35rem; }
+        .exp-content a { color: var(--accent); }
+
+        .exp-content strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .exp-content code {
+            font-size: .85rem;
+            padding: .15rem .4rem;
+            border-radius: .35rem;
+            background: rgba(var(--accent-rgb), .08);
+            color: var(--accent);
+        }
+
+        .exp-content pre {
+            background: var(--bg-section);
+            border: 1px solid var(--border);
+            border-radius: .75rem;
+            padding: 1.25rem;
+            overflow-x: auto;
+            font-size: .85rem;
+        }
+
+        .breadcrumb-item + .breadcrumb-item::before { color: var(--text-muted); }
+    </style>
+
+{% endblock %}
