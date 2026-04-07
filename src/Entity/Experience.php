@@ -46,9 +46,16 @@ class Experience
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $courteDescription = null;
 
+    /**
+     * @var Collection<int, ExperienceImage>
+     */
+    #[ORM\OneToMany(targetEntity: ExperienceImage::class, mappedBy: 'experience', orphanRemoval: true)]
+    private Collection $experienceImages;
+
     public function __construct()
     {
         $this->competences = new ArrayCollection();
+        $this->experienceImages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -174,5 +181,39 @@ class Experience
         $this->courteDescription = $courteDescription;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, ExperienceImage>
+     */
+    public function getExperienceImages(): Collection
+    {
+        return $this->experienceImages;
+    }
+
+    public function addExperienceImage(ExperienceImage $experienceImage): static
+    {
+        if (!$this->experienceImages->contains($experienceImage)) {
+            $this->experienceImages->add($experienceImage);
+            $experienceImage->setExperience($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExperienceImage(ExperienceImage $experienceImage): static
+    {
+        if ($this->experienceImages->removeElement($experienceImage)) {
+            // set the owning side to null (unless already changed)
+            if ($experienceImage->getExperience() === $this) {
+                $experienceImage->setExperience(null);
+            }
+        }
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->titre . ' — ' . $this->entreprise;
     }
 }
