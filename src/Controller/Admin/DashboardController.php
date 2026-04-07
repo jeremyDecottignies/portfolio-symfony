@@ -2,6 +2,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Project;
+use App\Entity\ProjectImage;
 use App\Entity\Experience;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
@@ -25,13 +26,14 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-        ->setTitle('Admin Portfolio');
+            ->setTitle('Admin Portfolio');
     }
 
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Tableau de bord', 'fa fa-home');
         yield MenuItem::linkToCrud('Projets', 'fa fa-code', Project::class);
+        yield MenuItem::linkToCrud('Images projets', 'fa fa-image', ProjectImage::class);
         yield MenuItem::linkToCrud('Experiences', 'fa fa-briefcase', Experience::class);
         yield MenuItem::linkToCrud('Parcours scolaire', 'fa fa-graduation-cap', Education::class);
     }
