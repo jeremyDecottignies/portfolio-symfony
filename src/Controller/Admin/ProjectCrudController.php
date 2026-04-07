@@ -56,7 +56,7 @@ class ProjectCrudController extends AbstractCrudController
                 ->setLabel('Compétences BTS SIO')
                 ->setRequired(false),
 
-            FileField::new('pdfFile')
+            FileField::new('pdffile')
                 ->setLabel('Fichier PDF')
                 ->setUploadDir('public/uploads/pdf/projects')
                 ->setBasePath('uploads/pdf/projects')
