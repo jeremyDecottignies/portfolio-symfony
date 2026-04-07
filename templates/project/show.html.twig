@@ -46,6 +46,13 @@
                                 Voir sur GitHub →
                             </a>
                         {% endif %}
+                        {% if project.pdfFile %}
+                            <a href="{{ asset('uploads/pdf/projects/' ~ project.pdfFile) }}"
+                               target="_blank" rel="noopener"
+                               class="btn btn-outline-primary">
+                                📄 Voir le PDF
+                            </a>
+                        {% endif %}
                         <a href="{{ path('project_index') }}" class="btn btn-outline-primary">
                             ← Retour aux projets
                         </a>
@@ -71,9 +78,6 @@
         <section style="background: var(--bg-section); padding: 2rem 0;">
             <div class="container">
 
-                {# ══════════════════════════════════════════
-           MODE COMPARISON — Avant / Après côte à côte
-        ══════════════════════════════════════════ #}
                 {% if project.displayMode == 'comparison' %}
 
                     <div class="reveal mb-3">
@@ -96,7 +100,6 @@
                             display: flex;
                             flex-direction: column;
                         ">
-                                    {# Label automatique : Avant / Après / Étape N #}
                                     <div style="
                                 padding: .4rem .9rem;
                                 font-size: .72rem;
@@ -106,12 +109,9 @@
                                 color: var(--accent);
                                 border-bottom: 1px solid var(--border);
                             ">
-                                        {% if loop.first %}
-                                            Avant
-                                        {% elseif loop.last and allImages|length == 2 %}
-                                            Après
-                                        {% else %}
-                                            Étape {{ loop.index }}
+                                        {% if loop.first %}Avant
+                                        {% elseif loop.last and allImages|length == 2 %}Après
+                                        {% else %}Étape {{ loop.index }}
                                         {% endif %}
                                     </div>
                                     <div style="
@@ -134,14 +134,10 @@
                         </div>
                     </div>
 
-                    {# ══════════════════════════════════════════
-           MODE GRID — Grille toutes visibles
-        ══════════════════════════════════════════ #}
                 {% else %}
 
                     <div class="reveal">
                         {% if allImages|length == 1 %}
-                            {# Une seule image — pleine largeur #}
                             <div style="
                         border-radius: 1.25rem;
                         overflow: hidden;
@@ -162,7 +158,6 @@
                             </div>
 
                         {% else %}
-                            {# Plusieurs images — grille responsive #}
                             <div style="
                         display: grid;
                         grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -199,7 +194,7 @@
             </div>
         </section>
 
-        {# ── Lightbox ── #}
+        {# Lightbox #}
         <div id="lightbox" style="
     display: none;
     position: fixed; inset: 0; z-index: 9999;
@@ -259,10 +254,41 @@
                                 </dd>
                             {% endif %}
 
+                            {% if project.pdfFile %}
+                                <dt style="color: var(--text-muted); font-weight: 400; margin-bottom: .2rem;">Document</dt>
+                                <dd style="margin-bottom: 1rem;">
+                                    <a href="{{ asset('uploads/pdf/projects/' ~ project.pdfFile) }}"
+                                       target="_blank" rel="noopener"
+                                       style="color: var(--accent); font-size: .875rem;">
+                                        📄 Télécharger le PDF →
+                                    </a>
+                                </dd>
+                            {% endif %}
+
                             {% if allImages|length > 0 %}
                                 <dt style="color: var(--text-muted); font-weight: 400; margin-bottom: .2rem;">Photos</dt>
                                 <dd style="margin-bottom: 1rem;">
                                     <span class="tech-badge">{{ allImages|length }} image(s)</span>
+                                </dd>
+                            {% endif %}
+
+                            {% if project.competences is defined and project.competences|length > 0 %}
+                                <dt style="color: var(--text-muted); font-weight: 400; margin-bottom: .5rem;">Compétences BTS SIO</dt>
+                                <dd style="margin-bottom: 1rem;">
+                                    <div class="d-flex flex-column gap-2">
+                                        {% for competence in project.competences %}
+                                            <div style="
+                                            display: flex; align-items: center; gap: .6rem;
+                                            padding: .4rem .75rem;
+                                            border-radius: .6rem;
+                                            background: rgba(var(--accent-rgb),.06);
+                                            border: 1px solid rgba(var(--accent-rgb),.15);
+                                        ">
+                                                <span style="font-size: .72rem; font-weight: 700; color: var(--accent); min-width: 24px;">{{ competence.code }}</span>
+                                                <span style="font-size: .78rem; color: var(--text-muted);">{{ competence.libelle }}</span>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
                                 </dd>
                             {% endif %}
                         </dl>
@@ -281,22 +307,14 @@
     </section>
 
     <style>
-        .project-img-clickable {
-            cursor: zoom-in;
-            transition: transform .2s;
-        }
-
-        .project-img-clickable:hover {
-            transform: scale(1.02);
-        }
+        .project-img-clickable { cursor: zoom-in; transition: transform .2s; }
+        .project-img-clickable:hover { transform: scale(1.02); }
 
         .project-content h2,
         .project-content h3 {
             font-family: var(--font-display);
-            font-weight: 700;
-            color: var(--text);
-            margin-top: 2rem;
-            margin-bottom: .75rem;
+            font-weight: 700; color: var(--text);
+            margin-top: 2rem; margin-bottom: .75rem;
         }
 
         .project-content h2 { font-size: 1.3rem; }
@@ -304,17 +322,13 @@
         .project-content p { margin-bottom: 1.1rem; }
 
         .project-content ul,
-        .project-content ol {
-            padding-left: 1.4rem;
-            margin-bottom: 1.1rem;
-        }
+        .project-content ol { padding-left: 1.4rem; margin-bottom: 1.1rem; }
 
         .project-content li { margin-bottom: .35rem; }
         .project-content a { color: var(--accent); }
 
         .project-content code {
-            font-size: .85rem;
-            padding: .15rem .4rem;
+            font-size: .85rem; padding: .15rem .4rem;
             border-radius: .35rem;
             background: rgba(var(--accent-rgb), .08);
             color: var(--accent);
@@ -324,9 +338,7 @@
             background: var(--bg-section);
             border: 1px solid var(--border);
             border-radius: .75rem;
-            padding: 1.25rem;
-            overflow-x: auto;
-            font-size: .85rem;
+            padding: 1.25rem; overflow-x: auto; font-size: .85rem;
         }
 
         .breadcrumb-item + .breadcrumb-item::before { color: var(--text-muted); }
@@ -336,8 +348,7 @@
         function openLightbox(src, alt) {
             const lb = document.getElementById('lightbox');
             const img = document.getElementById('lightbox-img');
-            img.src = src;
-            img.alt = alt;
+            img.src = src; img.alt = alt;
             lb.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
