@@ -11,7 +11,7 @@ final class VeilleController extends AbstractController
     #[Route('/veille', name: 'app_veille_controler')]
     public function index(): Response
     {
-        return $this->render('veille_controler/index.html.twig', [
+        return $this->render('veille/index.html.twig', [
             'controller_name' => 'VeilleController',
         ]);
     }
