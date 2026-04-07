@@ -1,46 +1,37 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Veille Technologique — Cloud & DevOps 2023–2025</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+{% extends 'base.html.twig' %}
+
+{% block title %}Veille Technologique — Cloud & DevOps 2023–2025{% endblock %}
+
+{% block meta_description %}Veille technologique Cloud & DevOps 2023–2025 — tendances, statistiques et évolutions majeures par Jérémy Decottignies, BTS SIO.{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #05070f;
-            --bg2: #0b0f1e;
-            --bg3: #111827;
-            --text: #e2e8f0;
-            --muted: #64748b;
-            --accent: #38bdf8;
-            --accent2: #818cf8;
-            --accent3: #34d399;
-            --accent4: #f59e0b;
-            --accent5: #f472b6;
-            --border: rgba(255,255,255,0.07);
-            --font-display: 'Syne', sans-serif;
-            --font-body: 'DM Sans', sans-serif;
-            --font-mono: 'DM Mono', monospace;
-        }
-
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: var(--font-body);
-            font-weight: 400;
-            line-height: 1.7;
+        /* ── Thème sombre spécifique à la veille ── */
+        .veille-wrap {
+            --vbg:    #05070f;
+            --vbg2:   #0b0f1e;
+            --vtext:  #e2e8f0;
+            --vmuted: #64748b;
+            --vacc:   #38bdf8;
+            --vacc2:  #818cf8;
+            --vacc3:  #34d399;
+            --vacc4:  #f59e0b;
+            --vacc5:  #f472b6;
+            --vborder: rgba(255,255,255,0.07);
+            --mono: 'DM Mono', monospace;
+            background: var(--vbg);
+            color: var(--vtext);
+            font-family: var(--font-body, 'DM Sans', sans-serif);
+            position: relative;
             overflow-x: hidden;
         }
 
-        /* ── Grid background ── */
-        body::before {
+        /* Grille de fond */
+        .veille-wrap::before {
             content: '';
-            position: fixed;
+            position: absolute;
             inset: 0;
             background-image:
                 linear-gradient(rgba(56,189,248,0.03) 1px, transparent 1px),
@@ -50,56 +41,57 @@
             z-index: 0;
         }
 
-        /* ── NAV ── */
-        nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            display: flex; align-items: center; justify-content: space-between;
-            padding: .9rem 2rem;
-            background: rgba(5,7,15,0.85);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border);
+        /* Barre de progression */
+        #veille-progress {
+            position: fixed; top: 0; left: 0; z-index: 200;
+            height: 3px;
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            width: 0%;
+            transition: width .1s;
         }
 
-        .nav-brand {
-            font-family: var(--font-display);
-            font-weight: 800;
-            font-size: .95rem;
-            color: var(--accent);
-            letter-spacing: -.03em;
+        /* Ancres internes */
+        .veille-subnav {
+            position: relative; z-index: 1;
+            display: flex; gap: 1.5rem; flex-wrap: wrap;
+            justify-content: center;
+            padding: 1rem 2rem;
+            background: rgba(5,7,15,0.6);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--vborder);
         }
 
-        .nav-links { display: flex; gap: 1.5rem; }
-        .nav-links a {
+        .veille-subnav a {
             font-size: .8rem;
-            color: var(--muted);
+            color: var(--vmuted);
             text-decoration: none;
+            font-family: var(--mono);
             transition: color .2s;
-            font-family: var(--font-mono);
         }
-        .nav-links a:hover { color: var(--text); }
 
-        .nav-badge {
+        .veille-subnav a:hover { color: var(--vtext); }
+
+        .veille-badge {
             font-size: .7rem;
-            font-family: var(--font-mono);
+            font-family: var(--mono);
             padding: .25rem .7rem;
             border-radius: 999px;
             background: rgba(56,189,248,.1);
-            color: var(--accent);
+            color: var(--vacc);
             border: 1px solid rgba(56,189,248,.2);
         }
 
         /* ── HERO ── */
-        .hero {
-            position: relative;
-            min-height: 100vh;
+        .v-hero {
+            position: relative; z-index: 1;
+            min-height: 80vh;
             display: flex; flex-direction: column;
             align-items: center; justify-content: center;
             text-align: center;
-            padding: 7rem 2rem 4rem;
-            z-index: 1;
+            padding: 5rem 2rem 4rem;
         }
 
-        .hero-glow {
+        .v-hero-glow {
             position: absolute;
             width: 600px; height: 600px;
             border-radius: 50%;
@@ -109,139 +101,108 @@
             pointer-events: none;
         }
 
-        .hero-eyebrow {
+        .v-eyebrow {
             display: inline-flex; align-items: center; gap: .5rem;
-            font-family: var(--font-mono);
+            font-family: var(--mono);
             font-size: .75rem;
-            color: var(--accent);
+            color: var(--vacc);
             background: rgba(56,189,248,.08);
             border: 1px solid rgba(56,189,248,.2);
             border-radius: 999px;
             padding: .3rem .9rem;
             margin-bottom: 1.5rem;
-            animation: fadeUp .6s ease both;
+            animation: vFadeUp .6s ease both;
         }
 
-        .hero-dot {
+        .v-dot {
             width: 6px; height: 6px; border-radius: 50%;
-            background: var(--accent);
-            animation: pulse 2s infinite;
+            background: var(--vacc);
+            animation: vPulse 2s infinite;
         }
 
-        .hero h1 {
-            font-family: var(--font-display);
+        .v-hero h1 {
+            font-family: var(--font-display, 'Syne', sans-serif);
             font-weight: 800;
             font-size: clamp(2.5rem, 7vw, 5rem);
             letter-spacing: -.04em;
             line-height: 1.05;
             margin-bottom: 1.5rem;
-            animation: fadeUp .6s .1s ease both;
+            color: var(--vtext);
+            animation: vFadeUp .6s .1s ease both;
         }
 
-        .hero h1 .gradient {
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
+        .v-gradient {
+            background: linear-gradient(135deg, var(--vacc), var(--vacc2));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .hero-sub {
+        .v-hero p {
             font-size: 1.1rem;
-            color: var(--muted);
+            color: var(--vmuted);
             font-weight: 300;
             max-width: 560px;
             margin: 0 auto 2.5rem;
-            animation: fadeUp .6s .2s ease both;
+            animation: vFadeUp .6s .2s ease both;
         }
 
-        .hero-stats {
+        .v-stats {
             display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;
-            animation: fadeUp .6s .3s ease both;
+            animation: vFadeUp .6s .3s ease both;
         }
 
-        .hero-stat {
-            text-align: center;
+        .v-stat-num {
+            font-family: var(--font-display, 'Syne', sans-serif);
+            font-size: 1.8rem; font-weight: 800;
+            color: var(--vacc); display: block;
         }
 
-        .hero-stat-num {
-            font-family: var(--font-display);
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--accent);
-            display: block;
+        .v-stat-label {
+            font-size: .75rem; color: var(--vmuted);
+            font-family: var(--mono);
         }
 
-        .hero-stat-label {
-            font-size: .75rem;
-            color: var(--muted);
-            font-family: var(--font-mono);
-        }
-
-        .scroll-hint {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex; flex-direction: column; align-items: center; gap: .4rem;
-            color: var(--muted);
-            font-size: .75rem;
-            font-family: var(--font-mono);
-            animation: bounce 2s infinite;
-        }
-
-        .scroll-hint-arrow {
-            width: 20px; height: 20px;
-            border-right: 2px solid var(--muted);
-            border-bottom: 2px solid var(--muted);
-            transform: rotate(45deg);
-        }
-
-        /* ── TIMELINE ── */
-        .timeline-section {
+        /* ── SECTIONS ── */
+        .v-section {
             position: relative; z-index: 1;
             padding: 5rem 2rem;
             max-width: 1100px;
             margin: 0 auto;
         }
 
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
+        .v-eyebrow-sm {
+            font-family: var(--mono);
+            font-size: .75rem; color: var(--vacc);
+            letter-spacing: .1em; text-transform: uppercase;
+            margin-bottom: .75rem; display: block;
         }
 
-        .section-eyebrow {
-            font-family: var(--font-mono);
-            font-size: .75rem;
-            color: var(--accent);
-            letter-spacing: .1em;
-            text-transform: uppercase;
-            margin-bottom: .75rem;
-            display: block;
-        }
-
-        .section-title {
-            font-family: var(--font-display);
+        .v-title {
+            font-family: var(--font-display, 'Syne', sans-serif);
             font-weight: 800;
             font-size: clamp(1.8rem, 4vw, 2.8rem);
-            letter-spacing: -.03em;
-            line-height: 1.1;
+            letter-spacing: -.03em; line-height: 1.1;
+            color: var(--vtext);
+            margin-bottom: 3rem;
+            text-align: center;
         }
 
-        .timeline {
+        /* ── TIMELINE ── */
+        .v-timeline {
             position: relative;
             padding-left: 3rem;
         }
 
-        .timeline::before {
+        .v-timeline::before {
             content: '';
             position: absolute;
-            left: 10px; top: 0; bottom: 0;
-            width: 2px;
-            background: linear-gradient(to bottom, var(--accent), var(--accent2), var(--accent3));
+            left: 10px; top: 0; bottom: 0; width: 2px;
+            background: linear-gradient(to bottom, var(--vacc), var(--vacc2), var(--vacc3));
             opacity: .3;
         }
 
-        .timeline-item {
+        .v-tl-item {
             position: relative;
             margin-bottom: 3rem;
             opacity: 0;
@@ -249,795 +210,476 @@
             transition: opacity .6s ease, transform .6s ease;
         }
 
-        .timeline-item.visible {
-            opacity: 1;
-            transform: none;
-        }
+        .v-tl-item.visible { opacity: 1; transform: none; }
 
-        .timeline-dot {
+        .v-tl-dot {
             position: absolute;
-            left: -2.75rem;
-            top: .4rem;
+            left: -2.75rem; top: .4rem;
             width: 14px; height: 14px;
             border-radius: 50%;
-            border: 2px solid var(--accent);
-            background: var(--bg);
+            border: 2px solid var(--vacc);
+            background: var(--vbg);
         }
 
-        .timeline-dot::after {
+        .v-tl-dot::after {
             content: '';
             position: absolute;
-            inset: 3px;
-            border-radius: 50%;
-            background: var(--accent);
+            inset: 3px; border-radius: 50%;
+            background: var(--vacc);
         }
 
-        .timeline-year {
-            font-family: var(--font-mono);
-            font-size: .75rem;
-            color: var(--accent);
-            margin-bottom: .5rem;
-            display: inline-flex;
-            align-items: center;
-            gap: .4rem;
+        .v-tl-year {
+            font-family: var(--mono); font-size: .75rem;
+            color: var(--vacc); margin-bottom: .5rem;
+            display: inline-flex; align-items: center; gap: .4rem;
             background: rgba(56,189,248,.08);
-            padding: .2rem .7rem;
-            border-radius: 999px;
+            padding: .2rem .7rem; border-radius: 999px;
             border: 1px solid rgba(56,189,248,.15);
         }
 
-        .timeline-card {
-            background: var(--bg2);
-            border: 1px solid var(--border);
-            border-radius: 1rem;
-            padding: 1.5rem;
+        .v-card {
+            background: var(--vbg2);
+            border: 1px solid var(--vborder);
+            border-radius: 1rem; padding: 1.5rem;
             transition: border-color .2s, transform .2s;
-            cursor: pointer;
         }
 
-        .timeline-card:hover {
-            border-color: rgba(56,189,248,.3);
-            transform: translateX(4px);
-        }
+        .v-card:hover { border-color: rgba(56,189,248,.3); transform: translateX(4px); }
 
-        .timeline-card-header {
+        .v-card-header {
             display: flex; align-items: flex-start;
             justify-content: space-between; gap: 1rem;
             margin-bottom: 1rem;
         }
 
-        .timeline-card h3 {
-            font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 1.1rem;
-            line-height: 1.2;
+        .v-card h3 {
+            font-family: var(--font-display, 'Syne', sans-serif);
+            font-weight: 700; font-size: 1.1rem; line-height: 1.2;
+            color: var(--vtext);
         }
 
-        .timeline-tag {
-            font-size: .65rem;
-            font-family: var(--font-mono);
-            padding: .2rem .6rem;
-            border-radius: 999px;
-            white-space: nowrap;
-            flex-shrink: 0;
+        .v-tag {
+            font-size: .65rem; font-family: var(--mono);
+            padding: .2rem .6rem; border-radius: 999px;
+            white-space: nowrap; flex-shrink: 0;
         }
 
-        .tag-blue { background: rgba(56,189,248,.1); color: var(--accent); border: 1px solid rgba(56,189,248,.2); }
-        .tag-purple { background: rgba(129,140,248,.1); color: var(--accent2); border: 1px solid rgba(129,140,248,.2); }
-        .tag-green { background: rgba(52,211,153,.1); color: var(--accent3); border: 1px solid rgba(52,211,153,.2); }
-        .tag-amber { background: rgba(245,158,11,.1); color: var(--accent4); border: 1px solid rgba(245,158,11,.2); }
-        .tag-pink { background: rgba(244,114,182,.1); color: var(--accent5); border: 1px solid rgba(244,114,182,.2); }
+        .tag-blue   { background: rgba(56,189,248,.1);  color: #38bdf8; border: 1px solid rgba(56,189,248,.2); }
+        .tag-purple { background: rgba(129,140,248,.1); color: #818cf8; border: 1px solid rgba(129,140,248,.2); }
+        .tag-green  { background: rgba(52,211,153,.1);  color: #34d399; border: 1px solid rgba(52,211,153,.2); }
+        .tag-amber  { background: rgba(245,158,11,.1);  color: #f59e0b; border: 1px solid rgba(245,158,11,.2); }
+        .tag-pink   { background: rgba(244,114,182,.1); color: #f472b6; border: 1px solid rgba(244,114,182,.2); }
 
-        .timeline-card p {
-            font-size: .9rem;
-            color: var(--muted);
-            line-height: 1.7;
-            margin-bottom: 1rem;
-        }
+        .v-card p { font-size: .9rem; color: var(--vmuted); line-height: 1.7; margin-bottom: 1rem; }
 
-        .timeline-tools {
-            display: flex; flex-wrap: wrap; gap: .4rem;
-        }
+        .v-tools { display: flex; flex-wrap: wrap; gap: .4rem; }
 
-        .tool-pill {
-            font-size: .7rem;
-            font-family: var(--font-mono);
-            padding: .2rem .6rem;
-            border-radius: 999px;
+        .v-pill {
+            font-size: .7rem; font-family: var(--mono);
+            padding: .2rem .6rem; border-radius: 999px;
             background: rgba(255,255,255,.05);
-            color: var(--muted);
-            border: 1px solid var(--border);
+            color: var(--vmuted); border: 1px solid var(--vborder);
         }
 
-        .timeline-source {
-            margin-top: .75rem;
-            font-size: .72rem;
-            color: var(--muted);
-            font-family: var(--font-mono);
+        .v-source {
+            margin-top: .75rem; font-size: .72rem;
+            color: var(--vmuted); font-family: var(--mono);
             display: flex; align-items: center; gap: .4rem;
         }
 
-        .timeline-source a {
-            color: var(--accent);
-            text-decoration: none;
-            opacity: .7;
-            transition: opacity .2s;
-        }
+        .v-source a { color: var(--vacc); text-decoration: none; opacity: .7; transition: opacity .2s; }
+        .v-source a:hover { opacity: 1; }
 
-        .timeline-source a:hover { opacity: 1; }
-
-        /* ── CARDS GRID ── */
-        .cards-section {
-            position: relative; z-index: 1;
-            padding: 5rem 2rem;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .cards-grid {
+        /* ── TECH CARDS ── */
+        .v-cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.25rem;
         }
 
-        .tech-card {
-            background: var(--bg2);
-            border: 1px solid var(--border);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            opacity: 0;
-            transform: translateY(20px);
+        .v-tech-card {
+            background: var(--vbg2); border: 1px solid var(--vborder);
+            border-radius: 1rem; padding: 1.5rem;
+            opacity: 0; transform: translateY(20px);
             transition: opacity .5s ease, transform .5s ease, border-color .2s;
         }
 
-        .tech-card.visible {
-            opacity: 1;
-            transform: none;
-        }
+        .v-tech-card.visible { opacity: 1; transform: none; }
+        .v-tech-card:hover { border-color: rgba(56,189,248,.25); }
+        .v-tech-card h3 { font-family: var(--font-display, 'Syne', sans-serif); font-weight: 700; font-size: 1rem; margin-bottom: .5rem; color: var(--vtext); }
+        .v-tech-card p { font-size: .875rem; color: var(--vmuted); line-height: 1.65; }
 
-        .tech-card:hover {
-            border-color: rgba(56,189,248,.25);
+        .v-bar { margin-top: 1rem; height: 3px; border-radius: 999px; background: var(--vborder); overflow: hidden; }
+        .v-bar-fill {
+            height: 100%; border-radius: 999px;
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            width: 0; transition: width 1.2s ease;
         }
+        .v-tech-card.visible .v-bar-fill { width: var(--fill); }
+        .v-percent { font-family: var(--mono); font-size: .72rem; color: var(--vacc); margin-top: .4rem; }
 
-        .tech-card-icon {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-        }
-
-        .tech-card h3 {
-            font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 1rem;
-            margin-bottom: .5rem;
-        }
-
-        .tech-card p {
-            font-size: .875rem;
-            color: var(--muted);
-            line-height: 1.65;
-        }
-
-        .tech-card-bar {
-            margin-top: 1rem;
-            height: 3px;
-            border-radius: 999px;
-            background: var(--border);
-            overflow: hidden;
-        }
-
-        .tech-card-bar-fill {
-            height: 100%;
-            border-radius: 999px;
-            background: linear-gradient(90deg, var(--accent), var(--accent2));
-            width: 0;
-            transition: width 1.2s ease;
-        }
-
-        .tech-card.visible .tech-card-bar-fill {
-            width: var(--fill);
-        }
-
-        .tech-card-percent {
-            font-family: var(--font-mono);
-            font-size: .72rem;
-            color: var(--accent);
-            margin-top: .4rem;
-        }
-
-        /* ── MARCHÉ ── */
-        .market-section {
-            position: relative; z-index: 1;
-            padding: 5rem 2rem;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .market-grid {
+        /* ── MARKET ── */
+        .v-market-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 3rem;
+            gap: 1rem; margin-top: 3rem;
         }
 
-        .market-stat {
-            background: var(--bg2);
-            border: 1px solid var(--border);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(16px);
+        .v-mstat {
+            background: var(--vbg2); border: 1px solid var(--vborder);
+            border-radius: 1rem; padding: 1.5rem; text-align: center;
+            opacity: 0; transform: translateY(16px);
             transition: opacity .5s ease, transform .5s ease;
         }
 
-        .market-stat.visible {
-            opacity: 1;
-            transform: none;
-        }
-
-        .market-stat-num {
-            font-family: var(--font-display);
-            font-weight: 800;
-            font-size: 2rem;
-            display: block;
-            margin-bottom: .25rem;
-        }
-
-        .market-stat-label {
-            font-size: .8rem;
-            color: var(--muted);
-            font-family: var(--font-mono);
-        }
+        .v-mstat.visible { opacity: 1; transform: none; }
+        .v-mstat-num { font-family: var(--font-display, 'Syne', sans-serif); font-weight: 800; font-size: 2rem; display: block; margin-bottom: .25rem; }
+        .v-mstat-label { font-size: .8rem; color: var(--vmuted); font-family: var(--mono); }
 
         /* ── SOURCES ── */
-        .sources-section {
-            position: relative; z-index: 1;
-            padding: 4rem 2rem 6rem;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .sources-grid {
+        .v-sources-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1rem;
-            margin-top: 2rem;
+            gap: 1rem; margin-top: 2rem;
         }
 
-        .source-card {
-            background: var(--bg2);
-            border: 1px solid var(--border);
-            border-radius: .75rem;
-            padding: 1.25rem;
+        .v-src-card {
+            background: var(--vbg2); border: 1px solid var(--vborder);
+            border-radius: .75rem; padding: 1.25rem;
             display: flex; flex-direction: column; gap: .5rem;
             transition: border-color .2s;
         }
 
-        .source-card:hover { border-color: rgba(56,189,248,.2); }
-
-        .source-card-title {
-            font-size: .875rem;
-            font-weight: 500;
-            color: var(--text);
-        }
-
-        .source-card-url {
-            font-size: .72rem;
-            font-family: var(--font-mono);
-            color: var(--accent);
-            opacity: .7;
-            text-decoration: none;
-            word-break: break-all;
-        }
-
-        .source-card-url:hover { opacity: 1; }
-
-        .source-card-type {
-            font-size: .65rem;
-            font-family: var(--font-mono);
-            color: var(--muted);
-        }
-
-        /* ── FOOTER ── */
-        footer {
-            position: relative; z-index: 1;
-            text-align: center;
-            padding: 2rem;
-            border-top: 1px solid var(--border);
-            font-size: .8rem;
-            color: var(--muted);
-            font-family: var(--font-mono);
-        }
+        .v-src-card:hover { border-color: rgba(56,189,248,.2); }
+        .v-src-title { font-size: .875rem; font-weight: 500; color: var(--vtext); }
+        .v-src-url { font-size: .72rem; font-family: var(--mono); color: var(--vacc); opacity: .7; text-decoration: none; word-break: break-all; }
+        .v-src-url:hover { opacity: 1; }
+        .v-src-type { font-size: .65rem; font-family: var(--mono); color: var(--vmuted); }
 
         /* ── ANIMATIONS ── */
-        @keyframes fadeUp {
+        @keyframes vFadeUp {
             from { opacity: 0; transform: translateY(20px); }
             to   { opacity: 1; transform: none; }
         }
 
-        @keyframes pulse {
+        @keyframes vPulse {
             0%, 100% { opacity: 1; transform: scale(1); }
             50%       { opacity: .4; transform: scale(1.4); }
         }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50%       { transform: translateX(-50%) translateY(8px); }
-        }
-
-        /* ── PROGRESS BAR TOP ── */
-        #progress-bar {
-            position: fixed; top: 0; left: 0; z-index: 200;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--accent2));
-            width: 0%;
-            transition: width .1s;
-        }
-
-        /* ── RESPONSIVE ── */
-        @media (max-width: 640px) {
-            .nav-links { display: none; }
-            .hero-stats { gap: 1.5rem; }
-            .timeline { padding-left: 2rem; }
-        }
     </style>
-</head>
-<body>
+{% endblock %}
 
-<div id="progress-bar"></div>
+{% block body %}
+    <div class="veille-wrap">
 
-<!-- NAV -->
-<nav>
-    <span class="nav-brand">Veille Cloud & DevOps</span>
-    <div class="nav-links">
-        <a href="#timeline">Timeline</a>
-        <a href="#tendances">Tendances</a>
-        <a href="#marche">Marché</a>
-        <a href="#sources">Sources</a>
-        <a href="{{ path('home') }}" style="color: var(--accent); border: 1px solid rgba(56,189,248,.2); padding: .2rem .7rem; border-radius: 999px;">← Portfolio</a>
-    </div>
-    <span class="nav-badge">2023 — 2025</span>
-</nav>
+        <div id="veille-progress"></div>
 
-<!-- HERO -->
-<section class="hero">
-    <div class="hero-glow"></div>
-
-    <div class="hero-eyebrow">
-        <span class="hero-dot"></span>
-        Veille Technologique — BTS SIO
-    </div>
-
-    <h1>
-        Cloud &amp;<br>
-        <span class="gradient">DevOps</span>
-    </h1>
-
-    <p class="hero-sub">
-        Trois ans d'évolutions majeures dans l'écosystème Cloud &amp; DevOps —
-        de la montée de Kubernetes à l'IA générative dans les pipelines CI/CD.
-    </p>
-
-    <div class="hero-stats">
-        <div class="hero-stat">
-            <span class="hero-stat-num">$25.5B</span>
-            <span class="hero-stat-label">marché DevOps 2028</span>
+        {# Sous-navigation interne #}
+        <div class="veille-subnav">
+            <a href="#timeline">Timeline</a>
+            <a href="#tendances">Tendances</a>
+            <a href="#marche">Marché</a>
+            <a href="#sources">Sources</a>
+            <span class="veille-badge">2023 — 2025</span>
         </div>
-        <div class="hero-stat">
-            <span class="hero-stat-num">+19.7%</span>
-            <span class="hero-stat-label">croissance annuelle</span>
-        </div>
-        <div class="hero-stat">
-            <span class="hero-stat-num">99%</span>
-            <span class="hero-stat-label">orga. satisfaites</span>
-        </div>
-        <div class="hero-stat">
-            <span class="hero-stat-num">80%</span>
-            <span class="hero-stat-label">adopteront DevOps d'ici 2027</span>
-        </div>
-    </div>
 
-    <div class="scroll-hint">
-        <span>scroll</span>
-        <div class="scroll-hint-arrow"></div>
-    </div>
-</section>
+        {# ── HERO ── #}
+        <section class="v-hero">
+            <div class="v-hero-glow"></div>
 
-<!-- TIMELINE -->
-<section class="timeline-section" id="timeline">
-    <div class="section-header">
-        <span class="section-eyebrow">// chronologie</span>
-        <h2 class="section-title">Trois ans d'évolutions</h2>
-    </div>
+            <div class="v-eyebrow">
+                <span class="v-dot"></span>
+                Veille Technologique — BTS SIO
+            </div>
 
-    <div class="timeline">
+            <h1 class="v-hero">
+                Cloud &amp;<br>
+                <span class="v-gradient">DevOps</span>
+            </h1>
 
-        <!-- 2023 -->
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-year">2023</div>
-            <div class="timeline-card">
-                <div class="timeline-card-header">
-                    <h3>Kubernetes s'impose comme l'OS du cloud</h3>
-                    <span class="timeline-tag tag-blue">Conteneurisation</span>
+            <p>
+                Trois ans d'évolutions majeures dans l'écosystème Cloud &amp; DevOps —
+                de la montée de Kubernetes à l'IA générative dans les pipelines CI/CD.
+            </p>
+
+            <div class="v-stats">
+                <div><span class="v-stat-num">$25.5B</span><span class="v-stat-label">marché DevOps 2028</span></div>
+                <div><span class="v-stat-num">+19.7%</span><span class="v-stat-label">croissance annuelle</span></div>
+                <div><span class="v-stat-num">99%</span><span class="v-stat-label">orga. satisfaites</span></div>
+                <div><span class="v-stat-num">80%</span><span class="v-stat-label">adopteront DevOps d'ici 2027</span></div>
+            </div>
+        </section>
+
+        {# ── TIMELINE ── #}
+        <section class="v-section" id="timeline">
+            <div style="text-align:center; margin-bottom:4rem;">
+                <span class="v-eyebrow-sm">// chronologie</span>
+                <h2 class="v-title">Trois ans d'évolutions</h2>
+            </div>
+
+            <div class="v-timeline">
+
+                <div class="v-tl-item">
+                    <div class="v-tl-dot"></div>
+                    <div class="v-tl-year">2023</div>
+                    <div class="v-card">
+                        <div class="v-card-header">
+                            <h3>Kubernetes s'impose comme l'OS du cloud</h3>
+                            <span class="v-tag tag-blue">Conteneurisation</span>
+                        </div>
+                        <p>Kubernetes devient la plateforme de référence pour déplacer des charges de travail vers le cloud. Le nombre de clusters K8s augmente cinq fois plus vite que les clusters on-premise. La sécurité, les bases de données et le CI/CD sont les domaines en plus forte croissance sur K8s.</p>
+                        <div class="v-tools">
+                            <span class="v-pill">Kubernetes</span><span class="v-pill">Docker</span><span class="v-pill">Helm</span><span class="v-pill">ArgoCD</span>
+                        </div>
+                        <div class="v-source">📎 <a href="https://geekflare.com/fr/devops-latest-trends/" target="_blank">geekflare.com — DevOps Trends 2025</a></div>
+                    </div>
                 </div>
-                <p>Kubernetes devient la plateforme de référence pour déplacer des charges de travail vers le cloud. Le nombre de clusters K8s augmente cinq fois plus vite que les clusters on-premise. La sécurité, les bases de données et le CI/CD sont les domaines en plus forte croissance sur K8s.</p>
-                <div class="timeline-tools">
-                    <span class="tool-pill">Kubernetes</span>
-                    <span class="tool-pill">Docker</span>
-                    <span class="tool-pill">Helm</span>
-                    <span class="tool-pill">ArgoCD</span>
+
+                <div class="v-tl-item">
+                    <div class="v-tl-dot"></div>
+                    <div class="v-tl-year">2023</div>
+                    <div class="v-card">
+                        <div class="v-card-header">
+                            <h3>FinOps : la gestion des coûts cloud mature</h3>
+                            <span class="v-tag tag-amber">FinOps</span>
+                        </div>
+                        <p>Le FinOps passe dans la catégorie "early majority". Google devient FinOps Certified Service Provider, Microsoft rejoint la FinOps Foundation. L'optimisation des coûts cloud devient une priorité face au contexte économique tendu.</p>
+                        <div class="v-tools">
+                            <span class="v-pill">AWS Cost Explorer</span><span class="v-pill">GCP Billing</span><span class="v-pill">CloudHealth</span><span class="v-pill">Infracost</span>
+                        </div>
+                        <div class="v-source">📎 <a href="https://www.infoq.com/articles/cloud-devops-trends-2023/" target="_blank">InfoQ — Cloud & DevOps Trends 2023</a></div>
+                    </div>
                 </div>
-                <div class="timeline-source">
-                    <span>📎 Source :</span>
-                    <a href="https://geekflare.com/fr/devops-latest-trends/" target="_blank">geekflare.com — DevOps Trends 2025</a>
+
+                <div class="v-tl-item">
+                    <div class="v-tl-dot"></div>
+                    <div class="v-tl-year">2023</div>
+                    <div class="v-card">
+                        <div class="v-card-header">
+                            <h3>Infrastructure as Code (IaC) généralisée</h3>
+                            <span class="v-tag tag-green">Automatisation</span>
+                        </div>
+                        <p>L'IaC s'impose comme standard pour provisionner les infrastructures via des fichiers de configuration. Ansible, Terraform et CloudFormation dominent. Le paradigme GitOps émerge : toute modification d'infrastructure passe par un commit Git.</p>
+                        <div class="v-tools">
+                            <span class="v-pill">Terraform</span><span class="v-pill">Ansible</span><span class="v-pill">CloudFormation</span><span class="v-pill">Pulumi</span>
+                        </div>
+                        <div class="v-source">📎 <a href="https://www.syloe.com/devops-et-cloud-tendances-et-logiciels-en-2023/" target="_blank">Syloe — DevOps & Cloud 2023</a></div>
+                    </div>
+                </div>
+
+                <div class="v-tl-item">
+                    <div class="v-tl-dot" style="border-color:#818cf8"></div>
+                    <div class="v-tl-year" style="background:rgba(129,140,248,.08);color:#818cf8;border-color:rgba(129,140,248,.2);">2024</div>
+                    <div class="v-card">
+                        <div class="v-card-header">
+                            <h3>DevSecOps : la sécurité intégrée au pipeline</h3>
+                            <span class="v-tag tag-purple">Sécurité</span>
+                        </div>
+                        <p>DevOps publie du code 60% plus rapidement, mais la vitesse introduit des vulnérabilités. DevSecOps intègre la sécurité à chaque phase du pipeline CI/CD. L'approche Zero Trust Networking monte en puissance avec AWS Verified Access lancé en mai 2023.</p>
+                        <div class="v-tools">
+                            <span class="v-pill">Snyk</span><span class="v-pill">SonarQube</span><span class="v-pill">AWS Verified Access</span><span class="v-pill">Trivy</span>
+                        </div>
+                        <div class="v-source">📎 <a href="https://www.gologic.ca/devops-en-bref-retour-sur-2024-et-les-tendances-pour-2025/" target="_blank">Gologic — DevOps 2024 & 2025</a></div>
+                    </div>
+                </div>
+
+                <div class="v-tl-item">
+                    <div class="v-tl-dot" style="border-color:#818cf8"></div>
+                    <div class="v-tl-year" style="background:rgba(129,140,248,.08);color:#818cf8;border-color:rgba(129,140,248,.2);">2024</div>
+                    <div class="v-card">
+                        <div class="v-card-header">
+                            <h3>Platform Engineering : l'expérience développeur au centre</h3>
+                            <span class="v-tag tag-purple">Platform Eng.</span>
+                        </div>
+                        <p>Les Internal Developer Platforms (IDP) permettent aux équipes de déployer en self-service. La communauté Slack de Platform Engineering passe de 1 000 à 8 000 praticiens. Gartner prédit que 80% des orgs intégreront des plateformes DevOps d'ici 2027.</p>
+                        <div class="v-tools">
+                            <span class="v-pill">Backstage</span><span class="v-pill">Port</span><span class="v-pill">Humanitec</span><span class="v-pill">Cortex</span>
+                        </div>
+                        <div class="v-source">📎 <a href="https://www.infoq.com/articles/cloud-devops-trends-2025/" target="_blank">InfoQ — Cloud & DevOps Trends Report 2025</a></div>
+                    </div>
+                </div>
+
+                <div class="v-tl-item">
+                    <div class="v-tl-dot" style="border-color:#818cf8"></div>
+                    <div class="v-tl-year" style="background:rgba(129,140,248,.08);color:#818cf8;border-color:rgba(129,140,248,.2);">2024</div>
+                    <div class="v-card">
+                        <div class="v-card-header">
+                            <h3>Serverless : 9 milliards $ et +25% de croissance annuelle</h3>
+                            <span class="v-tag tag-pink">Serverless</span>
+                        </div>
+                        <p>Le marché du serverless dépasse les 9 milliards de dollars avec un CAGR de 25% prévu jusqu'en 2032. AWS Lambda, Google Cloud Functions et Azure Functions dominent. Le cloud passe d'une révolution à une évolution.</p>
+                        <div class="v-tools">
+                            <span class="v-pill">AWS Lambda</span><span class="v-pill">Cloud Functions</span><span class="v-pill">Azure Functions</span><span class="v-pill">Vercel</span>
+                        </div>
+                        <div class="v-source">📎 <a href="https://geekflare.com/fr/devops-latest-trends/" target="_blank">Geekflare — Serverless Market Stats</a></div>
+                    </div>
+                </div>
+
+                <div class="v-tl-item">
+                    <div class="v-tl-dot" style="border-color:#34d399"></div>
+                    <div class="v-tl-year" style="background:rgba(52,211,153,.08);color:#34d399;border-color:rgba(52,211,153,.2);">2025</div>
+                    <div class="v-card">
+                        <div class="v-card-header">
+                            <h3>AI Agents pour le cloud engineering</h3>
+                            <span class="v-tag tag-green">IA & DevOps</span>
+                        </div>
+                        <p>Les agents IA entrent dans les pipelines DevOps. Le protocole MCP d'Anthropic (nov. 2024) standardise l'intégration des LLMs avec les outils cloud. OpenAI, Microsoft et Google annoncent leur support MCP. L'adoption enterprise est freinée par la compliance.</p>
+                        <div class="v-tools">
+                            <span class="v-pill">GitHub Copilot</span><span class="v-pill">MCP Protocol</span><span class="v-pill">AWS CodeWhisperer</span><span class="v-pill">Dynatrace AI</span>
+                        </div>
+                        <div class="v-source">📎 <a href="https://www.infoq.com/articles/cloud-devops-trends-2025/" target="_blank">InfoQ — AI Agents Cloud Engineering 2025</a></div>
+                    </div>
+                </div>
+
+                <div class="v-tl-item">
+                    <div class="v-tl-dot" style="border-color:#34d399"></div>
+                    <div class="v-tl-year" style="background:rgba(52,211,153,.08);color:#34d399;border-color:rgba(52,211,153,.2);">2025</div>
+                    <div class="v-card">
+                        <div class="v-card-header">
+                            <h3>GitOps + IaC : traçabilité totale de l'infra</h3>
+                            <span class="v-tag tag-green">GitOps</span>
+                        </div>
+                        <p>GitOps mature comme standard pour les environnements cloud-native : toute l'infrastructure est versionnée dans Git. ArgoCD et Flux simplifient les rollbacks. Associé à Terraform, GitOps garantit que chaque changement d'infra est auditable et réversible.</p>
+                        <div class="v-tools">
+                            <span class="v-pill">ArgoCD</span><span class="v-pill">Flux</span><span class="v-pill">Terraform</span><span class="v-pill">GitHub Actions</span>
+                        </div>
+                        <div class="v-source">📎 <a href="https://atlanse.com/analyse/10-tendances-devops-2025/" target="_blank">Atlanse — 10 Tendances DevOps 2025</a></div>
+                    </div>
+                </div>
+
+                <div class="v-tl-item">
+                    <div class="v-tl-dot" style="border-color:#34d399"></div>
+                    <div class="v-tl-year" style="background:rgba(52,211,153,.08);color:#34d399;border-color:rgba(52,211,153,.2);">2025</div>
+                    <div class="v-card">
+                        <div class="v-card-header">
+                            <h3>GreenOps : DevOps durable et sobriété numérique</h3>
+                            <span class="v-tag tag-green">Green IT</span>
+                        </div>
+                        <p>Les pratiques DevOps intègrent les enjeux RSE. L'optimisation de l'orchestration Kubernetes pour réduire la consommation d'énergie devient un critère clé. L'Edge Computing s'impose pour traiter les données localement et diminuer les transferts réseau énergivores.</p>
+                        <div class="v-tools">
+                            <span class="v-pill">KEDA</span><span class="v-pill">Cloud Carbon Footprint</span><span class="v-pill">Kepler</span><span class="v-pill">Edge Computing</span>
+                        </div>
+                        <div class="v-source">📎 <a href="https://atlanse.com/analyse/10-tendances-devops-2025/" target="_blank">Atlanse — GreenOps & DevOps Durable</a></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        {# ── TENDANCES ── #}
+        <section class="v-section" id="tendances" style="background: rgba(11,15,30,.5);">
+            <div style="text-align:center; margin-bottom:3rem;">
+                <span class="v-eyebrow-sm">// technologies clés</span>
+                <h2 class="v-title">Adoption par technologie</h2>
+            </div>
+
+            <div class="v-cards-grid">
+                <div class="v-tech-card" style="--fill:89%">
+                    <div style="font-size:1.8rem;margin-bottom:1rem;">☁️</div>
+                    <h3>Cloud Native</h3>
+                    <p>95% des nouvelles charges de travail numériques se dérouleront sur des plateformes cloud. L'accent passe de la révolution à l'évolution des services.</p>
+                    <div class="v-bar"><div class="v-bar-fill"></div></div>
+                    <div class="v-percent">89% d'adoption enterprise</div>
+                </div>
+                <div class="v-tech-card" style="--fill:78%">
+                    <div style="font-size:1.8rem;margin-bottom:1rem;">🐳</div>
+                    <h3>Kubernetes & Conteneurs</h3>
+                    <p>Kubernetes est devenu l'OS du cloud. Clusters K8s x5 plus rapides que les clusters on-premise. Docker reste le standard de conteneurisation.</p>
+                    <div class="v-bar"><div class="v-bar-fill"></div></div>
+                    <div class="v-percent">78% des organisations en production</div>
+                </div>
+                <div class="v-tech-card" style="--fill:72%">
+                    <div style="font-size:1.8rem;margin-bottom:1rem;">🔄</div>
+                    <h3>CI/CD Pipelines</h3>
+                    <p>GitHub Actions, GitLab CI et Jenkins automatisent les déploiements continus. DevOps permet de publier du code 60% plus rapidement.</p>
+                    <div class="v-bar"><div class="v-bar-fill"></div></div>
+                    <div class="v-percent">72% utilisent un pipeline CI/CD</div>
+                </div>
+                <div class="v-tech-card" style="--fill:65%">
+                    <div style="font-size:1.8rem;margin-bottom:1rem;">🏗️</div>
+                    <h3>Infrastructure as Code</h3>
+                    <p>Terraform et Ansible dominent la gestion déclarative de l'infrastructure. GitOps associe IaC et Git pour une traçabilité complète.</p>
+                    <div class="v-bar"><div class="v-bar-fill"></div></div>
+                    <div class="v-percent">65% utilisent IaC en production</div>
+                </div>
+                <div class="v-tech-card" style="--fill:55%">
+                    <div style="font-size:1.8rem;margin-bottom:1rem;">🔒</div>
+                    <h3>DevSecOps</h3>
+                    <p>37% des leaders IT citent DevSecOps comme leur plus grand manque de compétences. La sécurité intégrée au pipeline devient incontournable.</p>
+                    <div class="v-bar"><div class="v-bar-fill" style="background:linear-gradient(90deg,#818cf8,#f472b6);"></div></div>
+                    <div class="v-percent">55% intègrent la sécurité au pipeline</div>
+                </div>
+                <div class="v-tech-card" style="--fill:42%">
+                    <div style="font-size:1.8rem;margin-bottom:1rem;">🤖</div>
+                    <h3>AIOps & AI Agents</h3>
+                    <p>Les agents IA dans les pipelines DevOps en forte croissance. MCP Protocol standardise l'accès des LLMs aux outils cloud.</p>
+                    <div class="v-bar"><div class="v-bar-fill" style="background:linear-gradient(90deg,#34d399,#38bdf8);"></div></div>
+                    <div class="v-percent">42% expérimentent l'IA dans leurs pipelines</div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-year">2023</div>
-            <div class="timeline-card">
-                <div class="timeline-card-header">
-                    <h3>FinOps : la gestion des coûts cloud mature</h3>
-                    <span class="timeline-tag tag-amber">FinOps</span>
-                </div>
-                <p>Le FinOps passe dans la catégorie "early majority". Google devient FinOps Certified Service Provider, Microsoft rejoint la FinOps Foundation. L'optimisation des coûts cloud devient une priorité face au contexte économique tendu et aux licenciements massifs dans la tech.</p>
-                <div class="timeline-tools">
-                    <span class="tool-pill">AWS Cost Explorer</span>
-                    <span class="tool-pill">GCP Billing</span>
-                    <span class="tool-pill">CloudHealth</span>
-                    <span class="tool-pill">Infracost</span>
-                </div>
-                <div class="timeline-source">
-                    <span>📎 Source :</span>
-                    <a href="https://www.infoq.com/articles/cloud-devops-trends-2023/" target="_blank">InfoQ — Cloud & DevOps Trends 2023</a>
-                </div>
+        {# ── MARCHÉ ── #}
+        <section class="v-section" id="marche">
+            <div style="text-align:center;">
+                <span class="v-eyebrow-sm">// chiffres clés</span>
+                <h2 class="v-title">Le marché en chiffres</h2>
             </div>
-        </div>
 
-        <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-year">2023</div>
-            <div class="timeline-card">
-                <div class="timeline-card-header">
-                    <h3>Infrastructure as Code (IaC) généralisée</h3>
-                    <span class="timeline-tag tag-green">Automatisation</span>
-                </div>
-                <p>L'IaC s'impose comme standard pour provisionner et gérer les infrastructures via des fichiers de configuration. Ansible, Terraform et CloudFormation dominent le marché. Le paradigme GitOps émerge : toute modification d'infrastructure passe par un commit Git, assurant traçabilité et auditabilité.</p>
-                <div class="timeline-tools">
-                    <span class="tool-pill">Terraform</span>
-                    <span class="tool-pill">Ansible</span>
-                    <span class="tool-pill">CloudFormation</span>
-                    <span class="tool-pill">Pulumi</span>
-                </div>
-                <div class="timeline-source">
-                    <span>📎 Source :</span>
-                    <a href="https://www.syloe.com/devops-et-cloud-tendances-et-logiciels-en-2023/" target="_blank">Syloe — DevOps & Cloud Tendances 2023</a>
-                </div>
+            <div class="v-market-grid">
+                <div class="v-mstat"><span class="v-mstat-num" style="color:#38bdf8">$10.4B</span><span class="v-mstat-label">marché DevOps 2023</span></div>
+                <div class="v-mstat"><span class="v-mstat-num" style="color:#818cf8">+19.7%</span><span class="v-mstat-label">croissance annuelle (CAGR)</span></div>
+                <div class="v-mstat"><span class="v-mstat-num" style="color:#34d399">$25.5B</span><span class="v-mstat-label">projection 2028</span></div>
+                <div class="v-mstat"><span class="v-mstat-num" style="color:#f59e0b">99%</span><span class="v-mstat-label">orga. satisfaites DevOps</span></div>
+                <div class="v-mstat"><span class="v-mstat-num" style="color:#f472b6">+25%</span><span class="v-mstat-label">CAGR serverless 2023–2032</span></div>
+                <div class="v-mstat"><span class="v-mstat-num" style="color:#38bdf8">$9B</span><span class="v-mstat-label">marché serverless dépassé en 2022</span></div>
+                <div class="v-mstat"><span class="v-mstat-num" style="color:#818cf8">80%</span><span class="v-mstat-label">orga. avec plateforme DevOps d'ici 2027</span></div>
+                <div class="v-mstat"><span class="v-mstat-num" style="color:#34d399">61%</span><span class="v-mstat-label">orga. améliorent qualité via DevOps</span></div>
             </div>
-        </div>
+        </section>
 
-        <!-- 2024 -->
-        <div class="timeline-item">
-            <div class="timeline-dot" style="border-color: var(--accent2)"></div>
-            <div class="timeline-year" style="background: rgba(129,140,248,.08); color: var(--accent2); border-color: rgba(129,140,248,.2);">2024</div>
-            <div class="timeline-card">
-                <div class="timeline-card-header">
-                    <h3>DevSecOps : la sécurité intégrée au pipeline</h3>
-                    <span class="timeline-tag tag-purple">Sécurité</span>
-                </div>
-                <p>DevOps publie du code 60% plus rapidement, mais la vitesse introduit des vulnérabilités. DevSecOps devient la réponse : la sécurité n'est plus une étape finale mais intégrée à chaque phase du pipeline CI/CD. L'approche Zero Trust Networking (ZTN) monte en puissance avec AWS Verified Access lancé en mai 2023.</p>
-                <div class="timeline-tools">
-                    <span class="tool-pill">Snyk</span>
-                    <span class="tool-pill">SonarQube</span>
-                    <span class="tool-pill">AWS Verified Access</span>
-                    <span class="tool-pill">Trivy</span>
-                </div>
-                <div class="timeline-source">
-                    <span>📎 Source :</span>
-                    <a href="https://www.gologic.ca/devops-en-bref-retour-sur-2024-et-les-tendances-pour-2025/" target="_blank">Gologic — DevOps 2024 & 2025</a>
-                </div>
+        {# ── SOURCES ── #}
+        <section class="v-section" id="sources" style="padding-bottom:6rem;">
+            <div style="text-align:center; margin-bottom:2rem;">
+                <span class="v-eyebrow-sm">// bibliographie</span>
+                <h2 class="v-title">Sources</h2>
             </div>
-        </div>
 
-        <div class="timeline-item">
-            <div class="timeline-dot" style="border-color: var(--accent2)"></div>
-            <div class="timeline-year" style="background: rgba(129,140,248,.08); color: var(--accent2); border-color: rgba(129,140,248,.2);">2024</div>
-            <div class="timeline-card">
-                <div class="timeline-card-header">
-                    <h3>Platform Engineering : l'expérience développeur au centre</h3>
-                    <span class="timeline-tag tag-purple">Platform Eng.</span>
-                </div>
-                <p>L'ingénierie de plateforme devient une priorité stratégique. Les Internal Developer Platforms (IDP) permettent aux équipes de déployer en self-service sans dépendre des ops. La communauté Slack de Platform Engineering passe de 1 000 à 8 000 praticiens. Gartner prédit que 80% des orgs intégreront des plateformes DevOps d'ici 2027.</p>
-                <div class="timeline-tools">
-                    <span class="tool-pill">Backstage</span>
-                    <span class="tool-pill">Port</span>
-                    <span class="tool-pill">Humanitec</span>
-                    <span class="tool-pill">Cortex</span>
-                </div>
-                <div class="timeline-source">
-                    <span>📎 Source :</span>
-                    <a href="https://www.infoq.com/articles/cloud-devops-trends-2025/" target="_blank">InfoQ — Cloud & DevOps Trends Report 2025</a>
-                </div>
+            <div class="v-sources-grid">
+                <div class="v-src-card"><span class="v-src-title">InfoQ — Cloud & DevOps Trends Report 2025</span><a class="v-src-url" href="https://www.infoq.com/articles/cloud-devops-trends-2025/" target="_blank">infoq.com/articles/cloud-devops-trends-2025</a><span class="v-src-type">Rapport annuel · 2025</span></div>
+                <div class="v-src-card"><span class="v-src-title">InfoQ — Cloud & DevOps Trends Report 2023</span><a class="v-src-url" href="https://www.infoq.com/articles/cloud-devops-trends-2023/" target="_blank">infoq.com/articles/cloud-devops-trends-2023</a><span class="v-src-type">Rapport annuel · 2023</span></div>
+                <div class="v-src-card"><span class="v-src-title">Geekflare — DevOps en 2025</span><a class="v-src-url" href="https://geekflare.com/fr/devops-latest-trends/" target="_blank">geekflare.com/fr/devops-latest-trends</a><span class="v-src-type">Article · Avril 2025</span></div>
+                <div class="v-src-card"><span class="v-src-title">Gologic — DevOps en bref : retour sur 2024</span><a class="v-src-url" href="https://www.gologic.ca/devops-en-bref-retour-sur-2024-et-les-tendances-pour-2025/" target="_blank">gologic.ca/devops-en-bref-retour-sur-2024</a><span class="v-src-type">Article · Mars 2025</span></div>
+                <div class="v-src-card"><span class="v-src-title">Atlanse — 10 tendances DevOps 2025</span><a class="v-src-url" href="https://atlanse.com/analyse/10-tendances-devops-2025/" target="_blank">atlanse.com/analyse/10-tendances-devops-2025</a><span class="v-src-type">Article · Décembre 2025</span></div>
+                <div class="v-src-card"><span class="v-src-title">Spacelift — Top 47 DevOps Statistics 2026</span><a class="v-src-url" href="https://spacelift.io/blog/devops-statistics" target="_blank">spacelift.io/blog/devops-statistics</a><span class="v-src-type">Rapport statistiques · 2026</span></div>
+                <div class="v-src-card"><span class="v-src-title">Syloe — DevOps & Cloud Tendances 2023</span><a class="v-src-url" href="https://www.syloe.com/devops-et-cloud-tendances-et-logiciels-en-2023/" target="_blank">syloe.com/devops-et-cloud-tendances-2023</a><span class="v-src-type">Article · Janvier 2023</span></div>
+                <div class="v-src-card"><span class="v-src-title">Ambient IT — Statistiques DevOps 2024</span><a class="v-src-url" href="https://www.ambient-it.net/statistiques-devops/" target="_blank">ambient-it.net/statistiques-devops</a><span class="v-src-type">Article · Décembre 2023</span></div>
+                <div class="v-src-card"><span class="v-src-title">Gartner — Prédictions Cloud & DevOps</span><a class="v-src-url" href="https://www.gartner.com" target="_blank">gartner.com</a><span class="v-src-type">Rapport Gartner · 2023–2025</span></div>
             </div>
-        </div>
+        </section>
 
-        <div class="timeline-item">
-            <div class="timeline-dot" style="border-color: var(--accent2)"></div>
-            <div class="timeline-year" style="background: rgba(129,140,248,.08); color: var(--accent2); border-color: rgba(129,140,248,.2);">2024</div>
-            <div class="timeline-card">
-                <div class="timeline-card-header">
-                    <h3>Serverless : 9 milliards $ et +25% de croissance annuelle</h3>
-                    <span class="timeline-tag tag-pink">Serverless</span>
-                </div>
-                <p>Le marché du serverless dépasse les 9 milliards de dollars avec un CAGR de 25% prévu jusqu'en 2032. Les développeurs se concentrent sur le code métier sans gérer l'infrastructure. AWS Lambda, Google Cloud Functions et Azure Functions dominent. Le cloud passe d'une révolution à une évolution : l'accent est mis sur le raffinement des services existants.</p>
-                <div class="timeline-tools">
-                    <span class="tool-pill">AWS Lambda</span>
-                    <span class="tool-pill">Cloud Functions</span>
-                    <span class="tool-pill">Azure Functions</span>
-                    <span class="tool-pill">Vercel</span>
-                </div>
-                <div class="timeline-source">
-                    <span>📎 Source :</span>
-                    <a href="https://geekflare.com/fr/devops-latest-trends/" target="_blank">Geekflare — Serverless Market Stats</a>
-                </div>
-            </div>
-        </div>
+    </div>{# fin .veille-wrap #}
 
-        <!-- 2025 -->
-        <div class="timeline-item">
-            <div class="timeline-dot" style="border-color: var(--accent3)"></div>
-            <div class="timeline-year" style="background: rgba(52,211,153,.08); color: var(--accent3); border-color: rgba(52,211,153,.2);">2025</div>
-            <div class="timeline-card">
-                <div class="timeline-card-header">
-                    <h3>AI Agents pour le cloud engineering</h3>
-                    <span class="timeline-tag tag-green">IA & DevOps</span>
-                </div>
-                <p>Les agents IA entrent dans les pipelines DevOps pour automatiser la gestion d'infrastructure, la détection d'anomalies et la réponse aux incidents. Le protocole MCP (Model Context Protocol) d'Anthropic, lancé en novembre 2024, standardise l'intégration des LLMs avec les outils cloud. OpenAI, Microsoft et Google annoncent leur support MCP. L'adoption enterprise est freinée par la compliance et la sécurité.</p>
-                <div class="timeline-tools">
-                    <span class="tool-pill">GitHub Copilot</span>
-                    <span class="tool-pill">AWS CodeWhisperer</span>
-                    <span class="tool-pill">MCP Protocol</span>
-                    <span class="tool-pill">Dynatrace AI</span>
-                </div>
-                <div class="timeline-source">
-                    <span>📎 Source :</span>
-                    <a href="https://www.infoq.com/articles/cloud-devops-trends-2025/" target="_blank">InfoQ — AI Agents Cloud Engineering 2025</a>
-                </div>
-            </div>
-        </div>
+    <script>
+        // Progress bar
+        const vBar = document.getElementById('veille-progress');
+        window.addEventListener('scroll', () => {
+            const h = document.documentElement;
+            const pct = (window.scrollY / (h.scrollHeight - h.clientHeight)) * 100;
+            if (vBar) vBar.style.width = pct + '%';
+        }, { passive: true });
 
-        <div class="timeline-item">
-            <div class="timeline-dot" style="border-color: var(--accent3)"></div>
-            <div class="timeline-year" style="background: rgba(52,211,153,.08); color: var(--accent3); border-color: rgba(52,211,153,.2);">2025</div>
-            <div class="timeline-card">
-                <div class="timeline-card-header">
-                    <h3>GitOps + IaC : traçabilité totale de l'infra</h3>
-                    <span class="timeline-tag tag-green">GitOps</span>
-                </div>
-                <p>GitOps mature comme standard pour les environnements cloud-native : toute l'infrastructure est versionnée dans Git. ArgoCD et Flux simplifient les rollbacks et renforcent la fiabilité. Associé à Terraform, GitOps garantit que chaque changement d'infra est auditable, reproductible et réversible.</p>
-                <div class="timeline-tools">
-                    <span class="tool-pill">ArgoCD</span>
-                    <span class="tool-pill">Flux</span>
-                    <span class="tool-pill">Terraform</span>
-                    <span class="tool-pill">GitHub Actions</span>
-                </div>
-                <div class="timeline-source">
-                    <span>📎 Source :</span>
-                    <a href="https://atlanse.com/analyse/10-tendances-devops-2025/" target="_blank">Atlanse — 10 Tendances DevOps 2025</a>
-                </div>
-            </div>
-        </div>
+        // Scroll reveal
+        const vIo = new IntersectionObserver((entries) => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) {
+                    setTimeout(() => e.target.classList.add('visible'), i * 80);
+                    vIo.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1 });
 
-        <div class="timeline-item">
-            <div class="timeline-dot" style="border-color: var(--accent3)"></div>
-            <div class="timeline-year" style="background: rgba(52,211,153,.08); color: var(--accent3); border-color: rgba(52,211,153,.2);">2025</div>
-            <div class="timeline-card">
-                <div class="timeline-card-header">
-                    <h3>GreenOps : DevOps durable et sobriété numérique</h3>
-                    <span class="timeline-tag tag-green">Green IT</span>
-                </div>
-                <p>Les pratiques DevOps intègrent désormais les enjeux RSE et de sobriété numérique. L'optimisation de l'orchestration des environnements Kubernetes pour réduire la consommation d'énergie devient un critère clé. L'Edge Computing s'impose pour traiter les données localement, réduire la latence et diminuer les transferts réseau énergivores.</p>
-                <div class="timeline-tools">
-                    <span class="tool-pill">KEDA</span>
-                    <span class="tool-pill">Cloud Carbon Footprint</span>
-                    <span class="tool-pill">Kepler</span>
-                    <span class="tool-pill">Edge Computing</span>
-                </div>
-                <div class="timeline-source">
-                    <span>📎 Source :</span>
-                    <a href="https://atlanse.com/analyse/10-tendances-devops-2025/" target="_blank">Atlanse — GreenOps & DevOps Durable</a>
-                </div>
-            </div>
-        </div>
+        document.querySelectorAll('.v-tl-item, .v-tech-card, .v-mstat').forEach(el => vIo.observe(el));
+    </script>
 
-    </div>
-</section>
-
-<!-- TENDANCES CLÉS -->
-<section class="cards-section" id="tendances">
-    <div class="section-header">
-        <span class="section-eyebrow">// technologies clés</span>
-        <h2 class="section-title">Adoption par technologie</h2>
-    </div>
-
-    <div class="cards-grid">
-        <div class="tech-card" style="--fill: 89%">
-            <div class="tech-card-icon">☁️</div>
-            <h3>Cloud Native</h3>
-            <p>95% des nouvelles charges de travail numériques se dérouleront sur des plateformes cloud. L'accent passe de la révolution à l'évolution des services.</p>
-            <div class="tech-card-bar"><div class="tech-card-bar-fill"></div></div>
-            <div class="tech-card-percent">89% d'adoption enterprise</div>
-        </div>
-
-        <div class="tech-card" style="--fill: 78%">
-            <div class="tech-card-icon">🐳</div>
-            <h3>Kubernetes & Conteneurs</h3>
-            <p>Kubernetes est devenu l'OS du cloud. Clusters K8s x5 plus rapides que les clusters on-premise. Docker reste le standard de conteneurisation.</p>
-            <div class="tech-card-bar"><div class="tech-card-bar-fill"></div></div>
-            <div class="tech-card-percent">78% des organisations en production</div>
-        </div>
-
-        <div class="tech-card" style="--fill: 72%">
-            <div class="tech-card-icon">🔄</div>
-            <h3>CI/CD Pipelines</h3>
-            <p>GitHub Actions, GitLab CI et Jenkins automatisent les déploiements continus. DevOps permet de publier du code 60% plus rapidement qu'en mode traditionnel.</p>
-            <div class="tech-card-bar"><div class="tech-card-bar-fill"></div></div>
-            <div class="tech-card-percent">72% utilisent un pipeline CI/CD</div>
-        </div>
-
-        <div class="tech-card" style="--fill: 65%">
-            <div class="tech-card-icon">🏗️</div>
-            <h3>Infrastructure as Code</h3>
-            <p>Terraform et Ansible dominent la gestion déclarative de l'infrastructure. GitOps associe IaC et Git pour une traçabilité complète de chaque changement.</p>
-            <div class="tech-card-bar"><div class="tech-card-bar-fill"></div></div>
-            <div class="tech-card-percent">65% utilisent IaC en production</div>
-        </div>
-
-        <div class="tech-card" style="--fill: 55%">
-            <div class="tech-card-icon">🔒</div>
-            <h3>DevSecOps</h3>
-            <p>37% des leaders IT citent DevSecOps comme leur plus grand manque de compétences. La sécurité intégrée au pipeline devient incontournable face aux cybermenaces.</p>
-            <div class="tech-card-bar"><div class="tech-card-bar-fill" style="background: linear-gradient(90deg, var(--accent2), var(--accent5));"></div></div>
-            <div class="tech-card-percent">55% intègrent la sécurité au pipeline</div>
-        </div>
-
-        <div class="tech-card" style="--fill: 42%">
-            <div class="tech-card-icon">🤖</div>
-            <h3>AIOps & AI Agents</h3>
-            <p>Les agents IA dans les pipelines DevOps en forte croissance. MCP Protocol standardise l'accès des LLMs aux outils cloud. Adoption freinée par la compliance enterprise.</p>
-            <div class="tech-card-bar"><div class="tech-card-bar-fill" style="background: linear-gradient(90deg, var(--accent3), var(--accent));"></div></div>
-            <div class="tech-card-percent">42% expérimentent l'IA dans leurs pipelines</div>
-        </div>
-    </div>
-</section>
-
-<!-- MARCHÉ -->
-<section class="market-section" id="marche">
-    <div class="section-header">
-        <span class="section-eyebrow">// chiffres clés</span>
-        <h2 class="section-title">Le marché en chiffres</h2>
-    </div>
-
-    <div class="market-grid">
-        <div class="market-stat">
-            <span class="market-stat-num" style="color: var(--accent);">$10.4B</span>
-            <span class="market-stat-label">marché DevOps 2023</span>
-        </div>
-        <div class="market-stat">
-            <span class="market-stat-num" style="color: var(--accent2);">+19.7%</span>
-            <span class="market-stat-label">croissance annuelle (CAGR)</span>
-        </div>
-        <div class="market-stat">
-            <span class="market-stat-num" style="color: var(--accent3);">$25.5B</span>
-            <span class="market-stat-label">projection 2028</span>
-        </div>
-        <div class="market-stat">
-            <span class="market-stat-num" style="color: var(--accent4);">99%</span>
-            <span class="market-stat-label">orga. satisfaites DevOps</span>
-        </div>
-        <div class="market-stat">
-            <span class="market-stat-num" style="color: var(--accent5);">+25%</span>
-            <span class="market-stat-label">CAGR serverless 2023–2032</span>
-        </div>
-        <div class="market-stat">
-            <span class="market-stat-num" style="color: var(--accent);">$9B</span>
-            <span class="market-stat-label">marché serverless dépassé en 2022</span>
-        </div>
-        <div class="market-stat">
-            <span class="market-stat-num" style="color: var(--accent2);">80%</span>
-            <span class="market-stat-label">orga. avec plateforme DevOps d'ici 2027</span>
-        </div>
-        <div class="market-stat">
-            <span class="market-stat-num" style="color: var(--accent3);">61%</span>
-            <span class="market-stat-label">orga. améliorent qualité via DevOps</span>
-        </div>
-    </div>
-</section>
-
-<!-- SOURCES -->
-<section class="sources-section" id="sources">
-    <div class="section-header">
-        <span class="section-eyebrow">// bibliographie</span>
-        <h2 class="section-title">Sources</h2>
-    </div>
-
-    <div class="sources-grid">
-        <div class="source-card">
-            <span class="source-card-title">InfoQ — Cloud & DevOps Trends Report 2025</span>
-            <a class="source-card-url" href="https://www.infoq.com/articles/cloud-devops-trends-2025/" target="_blank">infoq.com/articles/cloud-devops-trends-2025</a>
-            <span class="source-card-type">Rapport annuel · Consulté 2025</span>
-        </div>
-        <div class="source-card">
-            <span class="source-card-title">InfoQ — Cloud & DevOps Trends Report 2023</span>
-            <a class="source-card-url" href="https://www.infoq.com/articles/cloud-devops-trends-2023/" target="_blank">infoq.com/articles/cloud-devops-trends-2023</a>
-            <span class="source-card-type">Rapport annuel · Consulté 2023</span>
-        </div>
-        <div class="source-card">
-            <span class="source-card-title">Geekflare — DevOps en 2025 : Tendances & Statistiques</span>
-            <a class="source-card-url" href="https://geekflare.com/fr/devops-latest-trends/" target="_blank">geekflare.com/fr/devops-latest-trends</a>
-            <span class="source-card-type">Article · Avril 2025</span>
-        </div>
-        <div class="source-card">
-            <span class="source-card-title">Gologic — DevOps en bref : retour sur 2024</span>
-            <a class="source-card-url" href="https://www.gologic.ca/devops-en-bref-retour-sur-2024-et-les-tendances-pour-2025/" target="_blank">gologic.ca/devops-en-bref-retour-sur-2024</a>
-            <span class="source-card-type">Article · Mars 2025</span>
-        </div>
-        <div class="source-card">
-            <span class="source-card-title">Atlanse — 10 tendances DevOps 2025</span>
-            <a class="source-card-url" href="https://atlanse.com/analyse/10-tendances-devops-2025/" target="_blank">atlanse.com/analyse/10-tendances-devops-2025</a>
-            <span class="source-card-type">Article · Décembre 2025</span>
-        </div>
-        <div class="source-card">
-            <span class="source-card-title">Spacelift — Top 47 DevOps Statistics 2026</span>
-            <a class="source-card-url" href="https://spacelift.io/blog/devops-statistics" target="_blank">spacelift.io/blog/devops-statistics</a>
-            <span class="source-card-type">Rapport statistiques · 2026</span>
-        </div>
-        <div class="source-card">
-            <span class="source-card-title">Syloe — DevOps & Cloud Tendances 2023</span>
-            <a class="source-card-url" href="https://www.syloe.com/devops-et-cloud-tendances-et-logiciels-en-2023/" target="_blank">syloe.com/devops-et-cloud-tendances-2023</a>
-            <span class="source-card-type">Article · Janvier 2023</span>
-        </div>
-        <div class="source-card">
-            <span class="source-card-title">Ambient IT — Statistiques DevOps 2024</span>
-            <a class="source-card-url" href="https://www.ambient-it.net/statistiques-devops/" target="_blank">ambient-it.net/statistiques-devops</a>
-            <span class="source-card-type">Article · Décembre 2023</span>
-        </div>
-        <div class="source-card">
-            <span class="source-card-title">Gartner — Prédictions Cloud & DevOps</span>
-            <a class="source-card-url" href="https://www.gartner.com" target="_blank">gartner.com</a>
-            <span class="source-card-type">Rapport Gartner · 2023–2025</span>
-        </div>
-    </div>
-</section>
-
-<footer>
-    Veille Technologique Cloud &amp; DevOps 2023–2025 — Decottignies Jérémy — BTS SIO
-</footer>
-
-<script>
-    // ── Progress bar ───────────────────────────────────────
-    const bar = document.getElementById('progress-bar');
-    window.addEventListener('scroll', () => {
-        const h = document.documentElement;
-        const pct = (window.scrollY / (h.scrollHeight - h.clientHeight)) * 100;
-        bar.style.width = pct + '%';
-    }, { passive: true });
-
-    // ── Scroll reveal ──────────────────────────────────────
-    const io = new IntersectionObserver((entries) => {
-        entries.forEach((e, i) => {
-            if (e.isIntersecting) {
-                setTimeout(() => e.target.classList.add('visible'), i * 80);
-                io.unobserve(e.target);
-            }
-        });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.timeline-item, .tech-card, .market-stat').forEach(el => io.observe(el));
-</script>
-
-</body>
-</html>
+{% endblock %}
