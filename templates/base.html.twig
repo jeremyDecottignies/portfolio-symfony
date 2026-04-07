@@ -356,10 +356,6 @@
                        href="{{ path('project_index') }}">Projets</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% if app.request.attributes.get('_route') starts with 'veille' %}active{% endif %}"
-                       href="{{ path('veille') }}">Veille</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link {% if app.request.attributes.get('_route') starts with 'about' %}active{% endif %}"
                        href="{{ path('about') }}">À propos</a>
                 </li>
