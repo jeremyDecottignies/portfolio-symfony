@@ -18,7 +18,7 @@ class ExperienceController extends AbstractController
             throw $this->createNotFoundException('Expérience introuvable');
         }
 
-        return $this->render('experience/show.html.twig', [
+        return $this->render('experience/index.html.twig', [
             'experience' => $experience,
         ]);
     }
