@@ -6,13 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class VeilleController extends AbstractController
+class VeilleController extends AbstractController
 {
-    #[Route('/veille', name: 'app_veille_controler')]
+    #[Route('/veille', name: 'veille')]
     public function index(): Response
     {
-        return $this->render('veille/index.html.twig', [
-            'controller_name' => 'VeilleController',
-        ]);
+        return $this->render('veille/index.html.twig');
     }
 }
