@@ -1,0 +1,455 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Veille Technologique — Cloud & DevOps{% endblock %}
+
+{% block meta_description %}Veille technologique Cloud & DevOps 2023–2025 — tendances, statistiques et évolutions majeures.{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        {# colle ici tout le contenu de la balise <style> du fichier HTML #}
+    </style>
+{% endblock %}
+
+{% block body %}
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-glow"></div>
+
+        <div class="hero-eyebrow">
+            <span class="hero-dot"></span>
+            Veille Technologique — BTS SIO
+        </div>
+
+        <h1>
+            Cloud &amp;<br>
+            <span class="gradient">DevOps</span>
+        </h1>
+
+        <p class="hero-sub">
+            Trois ans d'évolutions majeures dans l'écosystème Cloud &amp; DevOps —
+            de la montée de Kubernetes à l'IA générative dans les pipelines CI/CD.
+        </p>
+
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <span class="hero-stat-num">$25.5B</span>
+                <span class="hero-stat-label">marché DevOps 2028</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-num">+19.7%</span>
+                <span class="hero-stat-label">croissance annuelle</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-num">99%</span>
+                <span class="hero-stat-label">orga. satisfaites</span>
+            </div>
+            <div class="hero-stat">
+                <span class="hero-stat-num">80%</span>
+                <span class="hero-stat-label">adopteront DevOps d'ici 2027</span>
+            </div>
+        </div>
+
+        <div class="scroll-hint">
+            <span>scroll</span>
+            <div class="scroll-hint-arrow"></div>
+        </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section class="timeline-section" id="timeline">
+        <div class="section-header">
+            <span class="section-eyebrow">// chronologie</span>
+            <h2 class="section-title">Trois ans d'évolutions</h2>
+        </div>
+
+        <div class="timeline">
+
+            <!-- 2023 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-year">2023</div>
+                <div class="timeline-card">
+                    <div class="timeline-card-header">
+                        <h3>Kubernetes s'impose comme l'OS du cloud</h3>
+                        <span class="timeline-tag tag-blue">Conteneurisation</span>
+                    </div>
+                    <p>Kubernetes devient la plateforme de référence pour déplacer des charges de travail vers le cloud. Le nombre de clusters K8s augmente cinq fois plus vite que les clusters on-premise. La sécurité, les bases de données et le CI/CD sont les domaines en plus forte croissance sur K8s.</p>
+                    <div class="timeline-tools">
+                        <span class="tool-pill">Kubernetes</span>
+                        <span class="tool-pill">Docker</span>
+                        <span class="tool-pill">Helm</span>
+                        <span class="tool-pill">ArgoCD</span>
+                    </div>
+                    <div class="timeline-source">
+                        <span>📎 Source :</span>
+                        <a href="https://geekflare.com/fr/devops-latest-trends/" target="_blank">geekflare.com — DevOps Trends 2025</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-year">2023</div>
+                <div class="timeline-card">
+                    <div class="timeline-card-header">
+                        <h3>FinOps : la gestion des coûts cloud mature</h3>
+                        <span class="timeline-tag tag-amber">FinOps</span>
+                    </div>
+                    <p>Le FinOps passe dans la catégorie "early majority". Google devient FinOps Certified Service Provider, Microsoft rejoint la FinOps Foundation. L'optimisation des coûts cloud devient une priorité face au contexte économique tendu et aux licenciements massifs dans la tech.</p>
+                    <div class="timeline-tools">
+                        <span class="tool-pill">AWS Cost Explorer</span>
+                        <span class="tool-pill">GCP Billing</span>
+                        <span class="tool-pill">CloudHealth</span>
+                        <span class="tool-pill">Infracost</span>
+                    </div>
+                    <div class="timeline-source">
+                        <span>📎 Source :</span>
+                        <a href="https://www.infoq.com/articles/cloud-devops-trends-2023/" target="_blank">InfoQ — Cloud & DevOps Trends 2023</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-year">2023</div>
+                <div class="timeline-card">
+                    <div class="timeline-card-header">
+                        <h3>Infrastructure as Code (IaC) généralisée</h3>
+                        <span class="timeline-tag tag-green">Automatisation</span>
+                    </div>
+                    <p>L'IaC s'impose comme standard pour provisionner et gérer les infrastructures via des fichiers de configuration. Ansible, Terraform et CloudFormation dominent le marché. Le paradigme GitOps émerge : toute modification d'infrastructure passe par un commit Git, assurant traçabilité et auditabilité.</p>
+                    <div class="timeline-tools">
+                        <span class="tool-pill">Terraform</span>
+                        <span class="tool-pill">Ansible</span>
+                        <span class="tool-pill">CloudFormation</span>
+                        <span class="tool-pill">Pulumi</span>
+                    </div>
+                    <div class="timeline-source">
+                        <span>📎 Source :</span>
+                        <a href="https://www.syloe.com/devops-et-cloud-tendances-et-logiciels-en-2023/" target="_blank">Syloe — DevOps & Cloud Tendances 2023</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2024 -->
+            <div class="timeline-item">
+                <div class="timeline-dot" style="border-color: var(--accent2)"></div>
+                <div class="timeline-year" style="background: rgba(129,140,248,.08); color: var(--accent2); border-color: rgba(129,140,248,.2);">2024</div>
+                <div class="timeline-card">
+                    <div class="timeline-card-header">
+                        <h3>DevSecOps : la sécurité intégrée au pipeline</h3>
+                        <span class="timeline-tag tag-purple">Sécurité</span>
+                    </div>
+                    <p>DevOps publie du code 60% plus rapidement, mais la vitesse introduit des vulnérabilités. DevSecOps devient la réponse : la sécurité n'est plus une étape finale mais intégrée à chaque phase du pipeline CI/CD. L'approche Zero Trust Networking (ZTN) monte en puissance avec AWS Verified Access lancé en mai 2023.</p>
+                    <div class="timeline-tools">
+                        <span class="tool-pill">Snyk</span>
+                        <span class="tool-pill">SonarQube</span>
+                        <span class="tool-pill">AWS Verified Access</span>
+                        <span class="tool-pill">Trivy</span>
+                    </div>
+                    <div class="timeline-source">
+                        <span>📎 Source :</span>
+                        <a href="https://www.gologic.ca/devops-en-bref-retour-sur-2024-et-les-tendances-pour-2025/" target="_blank">Gologic — DevOps 2024 & 2025</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot" style="border-color: var(--accent2)"></div>
+                <div class="timeline-year" style="background: rgba(129,140,248,.08); color: var(--accent2); border-color: rgba(129,140,248,.2);">2024</div>
+                <div class="timeline-card">
+                    <div class="timeline-card-header">
+                        <h3>Platform Engineering : l'expérience développeur au centre</h3>
+                        <span class="timeline-tag tag-purple">Platform Eng.</span>
+                    </div>
+                    <p>L'ingénierie de plateforme devient une priorité stratégique. Les Internal Developer Platforms (IDP) permettent aux équipes de déployer en self-service sans dépendre des ops. La communauté Slack de Platform Engineering passe de 1 000 à 8 000 praticiens. Gartner prédit que 80% des orgs intégreront des plateformes DevOps d'ici 2027.</p>
+                    <div class="timeline-tools">
+                        <span class="tool-pill">Backstage</span>
+                        <span class="tool-pill">Port</span>
+                        <span class="tool-pill">Humanitec</span>
+                        <span class="tool-pill">Cortex</span>
+                    </div>
+                    <div class="timeline-source">
+                        <span>📎 Source :</span>
+                        <a href="https://www.infoq.com/articles/cloud-devops-trends-2025/" target="_blank">InfoQ — Cloud & DevOps Trends Report 2025</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot" style="border-color: var(--accent2)"></div>
+                <div class="timeline-year" style="background: rgba(129,140,248,.08); color: var(--accent2); border-color: rgba(129,140,248,.2);">2024</div>
+                <div class="timeline-card">
+                    <div class="timeline-card-header">
+                        <h3>Serverless : 9 milliards $ et +25% de croissance annuelle</h3>
+                        <span class="timeline-tag tag-pink">Serverless</span>
+                    </div>
+                    <p>Le marché du serverless dépasse les 9 milliards de dollars avec un CAGR de 25% prévu jusqu'en 2032. Les développeurs se concentrent sur le code métier sans gérer l'infrastructure. AWS Lambda, Google Cloud Functions et Azure Functions dominent. Le cloud passe d'une révolution à une évolution : l'accent est mis sur le raffinement des services existants.</p>
+                    <div class="timeline-tools">
+                        <span class="tool-pill">AWS Lambda</span>
+                        <span class="tool-pill">Cloud Functions</span>
+                        <span class="tool-pill">Azure Functions</span>
+                        <span class="tool-pill">Vercel</span>
+                    </div>
+                    <div class="timeline-source">
+                        <span>📎 Source :</span>
+                        <a href="https://geekflare.com/fr/devops-latest-trends/" target="_blank">Geekflare — Serverless Market Stats</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2025 -->
+            <div class="timeline-item">
+                <div class="timeline-dot" style="border-color: var(--accent3)"></div>
+                <div class="timeline-year" style="background: rgba(52,211,153,.08); color: var(--accent3); border-color: rgba(52,211,153,.2);">2025</div>
+                <div class="timeline-card">
+                    <div class="timeline-card-header">
+                        <h3>AI Agents pour le cloud engineering</h3>
+                        <span class="timeline-tag tag-green">IA & DevOps</span>
+                    </div>
+                    <p>Les agents IA entrent dans les pipelines DevOps pour automatiser la gestion d'infrastructure, la détection d'anomalies et la réponse aux incidents. Le protocole MCP (Model Context Protocol) d'Anthropic, lancé en novembre 2024, standardise l'intégration des LLMs avec les outils cloud. OpenAI, Microsoft et Google annoncent leur support MCP. L'adoption enterprise est freinée par la compliance et la sécurité.</p>
+                    <div class="timeline-tools">
+                        <span class="tool-pill">GitHub Copilot</span>
+                        <span class="tool-pill">AWS CodeWhisperer</span>
+                        <span class="tool-pill">MCP Protocol</span>
+                        <span class="tool-pill">Dynatrace AI</span>
+                    </div>
+                    <div class="timeline-source">
+                        <span>📎 Source :</span>
+                        <a href="https://www.infoq.com/articles/cloud-devops-trends-2025/" target="_blank">InfoQ — AI Agents Cloud Engineering 2025</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot" style="border-color: var(--accent3)"></div>
+                <div class="timeline-year" style="background: rgba(52,211,153,.08); color: var(--accent3); border-color: rgba(52,211,153,.2);">2025</div>
+                <div class="timeline-card">
+                    <div class="timeline-card-header">
+                        <h3>GitOps + IaC : traçabilité totale de l'infra</h3>
+                        <span class="timeline-tag tag-green">GitOps</span>
+                    </div>
+                    <p>GitOps mature comme standard pour les environnements cloud-native : toute l'infrastructure est versionnée dans Git. ArgoCD et Flux simplifient les rollbacks et renforcent la fiabilité. Associé à Terraform, GitOps garantit que chaque changement d'infra est auditable, reproductible et réversible.</p>
+                    <div class="timeline-tools">
+                        <span class="tool-pill">ArgoCD</span>
+                        <span class="tool-pill">Flux</span>
+                        <span class="tool-pill">Terraform</span>
+                        <span class="tool-pill">GitHub Actions</span>
+                    </div>
+                    <div class="timeline-source">
+                        <span>📎 Source :</span>
+                        <a href="https://atlanse.com/analyse/10-tendances-devops-2025/" target="_blank">Atlanse — 10 Tendances DevOps 2025</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot" style="border-color: var(--accent3)"></div>
+                <div class="timeline-year" style="background: rgba(52,211,153,.08); color: var(--accent3); border-color: rgba(52,211,153,.2);">2025</div>
+                <div class="timeline-card">
+                    <div class="timeline-card-header">
+                        <h3>GreenOps : DevOps durable et sobriété numérique</h3>
+                        <span class="timeline-tag tag-green">Green IT</span>
+                    </div>
+                    <p>Les pratiques DevOps intègrent désormais les enjeux RSE et de sobriété numérique. L'optimisation de l'orchestration des environnements Kubernetes pour réduire la consommation d'énergie devient un critère clé. L'Edge Computing s'impose pour traiter les données localement, réduire la latence et diminuer les transferts réseau énergivores.</p>
+                    <div class="timeline-tools">
+                        <span class="tool-pill">KEDA</span>
+                        <span class="tool-pill">Cloud Carbon Footprint</span>
+                        <span class="tool-pill">Kepler</span>
+                        <span class="tool-pill">Edge Computing</span>
+                    </div>
+                    <div class="timeline-source">
+                        <span>📎 Source :</span>
+                        <a href="https://atlanse.com/analyse/10-tendances-devops-2025/" target="_blank">Atlanse — GreenOps & DevOps Durable</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- TENDANCES CLÉS -->
+    <section class="cards-section" id="tendances">
+        <div class="section-header">
+            <span class="section-eyebrow">// technologies clés</span>
+            <h2 class="section-title">Adoption par technologie</h2>
+        </div>
+
+        <div class="cards-grid">
+            <div class="tech-card" style="--fill: 89%">
+                <div class="tech-card-icon">☁️</div>
+                <h3>Cloud Native</h3>
+                <p>95% des nouvelles charges de travail numériques se dérouleront sur des plateformes cloud. L'accent passe de la révolution à l'évolution des services.</p>
+                <div class="tech-card-bar"><div class="tech-card-bar-fill"></div></div>
+                <div class="tech-card-percent">89% d'adoption enterprise</div>
+            </div>
+
+            <div class="tech-card" style="--fill: 78%">
+                <div class="tech-card-icon">🐳</div>
+                <h3>Kubernetes & Conteneurs</h3>
+                <p>Kubernetes est devenu l'OS du cloud. Clusters K8s x5 plus rapides que les clusters on-premise. Docker reste le standard de conteneurisation.</p>
+                <div class="tech-card-bar"><div class="tech-card-bar-fill"></div></div>
+                <div class="tech-card-percent">78% des organisations en production</div>
+            </div>
+
+            <div class="tech-card" style="--fill: 72%">
+                <div class="tech-card-icon">🔄</div>
+                <h3>CI/CD Pipelines</h3>
+                <p>GitHub Actions, GitLab CI et Jenkins automatisent les déploiements continus. DevOps permet de publier du code 60% plus rapidement qu'en mode traditionnel.</p>
+                <div class="tech-card-bar"><div class="tech-card-bar-fill"></div></div>
+                <div class="tech-card-percent">72% utilisent un pipeline CI/CD</div>
+            </div>
+
+            <div class="tech-card" style="--fill: 65%">
+                <div class="tech-card-icon">🏗️</div>
+                <h3>Infrastructure as Code</h3>
+                <p>Terraform et Ansible dominent la gestion déclarative de l'infrastructure. GitOps associe IaC et Git pour une traçabilité complète de chaque changement.</p>
+                <div class="tech-card-bar"><div class="tech-card-bar-fill"></div></div>
+                <div class="tech-card-percent">65% utilisent IaC en production</div>
+            </div>
+
+            <div class="tech-card" style="--fill: 55%">
+                <div class="tech-card-icon">🔒</div>
+                <h3>DevSecOps</h3>
+                <p>37% des leaders IT citent DevSecOps comme leur plus grand manque de compétences. La sécurité intégrée au pipeline devient incontournable face aux cybermenaces.</p>
+                <div class="tech-card-bar"><div class="tech-card-bar-fill" style="background: linear-gradient(90deg, var(--accent2), var(--accent5));"></div></div>
+                <div class="tech-card-percent">55% intègrent la sécurité au pipeline</div>
+            </div>
+
+            <div class="tech-card" style="--fill: 42%">
+                <div class="tech-card-icon">🤖</div>
+                <h3>AIOps & AI Agents</h3>
+                <p>Les agents IA dans les pipelines DevOps en forte croissance. MCP Protocol standardise l'accès des LLMs aux outils cloud. Adoption freinée par la compliance enterprise.</p>
+                <div class="tech-card-bar"><div class="tech-card-bar-fill" style="background: linear-gradient(90deg, var(--accent3), var(--accent));"></div></div>
+                <div class="tech-card-percent">42% expérimentent l'IA dans leurs pipelines</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MARCHÉ -->
+    <section class="market-section" id="marche">
+        <div class="section-header">
+            <span class="section-eyebrow">// chiffres clés</span>
+            <h2 class="section-title">Le marché en chiffres</h2>
+        </div>
+
+        <div class="market-grid">
+            <div class="market-stat">
+                <span class="market-stat-num" style="color: var(--accent);">$10.4B</span>
+                <span class="market-stat-label">marché DevOps 2023</span>
+            </div>
+            <div class="market-stat">
+                <span class="market-stat-num" style="color: var(--accent2);">+19.7%</span>
+                <span class="market-stat-label">croissance annuelle (CAGR)</span>
+            </div>
+            <div class="market-stat">
+                <span class="market-stat-num" style="color: var(--accent3);">$25.5B</span>
+                <span class="market-stat-label">projection 2028</span>
+            </div>
+            <div class="market-stat">
+                <span class="market-stat-num" style="color: var(--accent4);">99%</span>
+                <span class="market-stat-label">orga. satisfaites DevOps</span>
+            </div>
+            <div class="market-stat">
+                <span class="market-stat-num" style="color: var(--accent5);">+25%</span>
+                <span class="market-stat-label">CAGR serverless 2023–2032</span>
+            </div>
+            <div class="market-stat">
+                <span class="market-stat-num" style="color: var(--accent);">$9B</span>
+                <span class="market-stat-label">marché serverless dépassé en 2022</span>
+            </div>
+            <div class="market-stat">
+                <span class="market-stat-num" style="color: var(--accent2);">80%</span>
+                <span class="market-stat-label">orga. avec plateforme DevOps d'ici 2027</span>
+            </div>
+            <div class="market-stat">
+                <span class="market-stat-num" style="color: var(--accent3);">61%</span>
+                <span class="market-stat-label">orga. améliorent qualité via DevOps</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOURCES -->
+    <section class="sources-section" id="sources">
+        <div class="section-header">
+            <span class="section-eyebrow">// bibliographie</span>
+            <h2 class="section-title">Sources</h2>
+        </div>
+
+        <div class="sources-grid">
+            <div class="source-card">
+                <span class="source-card-title">InfoQ — Cloud & DevOps Trends Report 2025</span>
+                <a class="source-card-url" href="https://www.infoq.com/articles/cloud-devops-trends-2025/" target="_blank">infoq.com/articles/cloud-devops-trends-2025</a>
+                <span class="source-card-type">Rapport annuel · Consulté 2025</span>
+            </div>
+            <div class="source-card">
+                <span class="source-card-title">InfoQ — Cloud & DevOps Trends Report 2023</span>
+                <a class="source-card-url" href="https://www.infoq.com/articles/cloud-devops-trends-2023/" target="_blank">infoq.com/articles/cloud-devops-trends-2023</a>
+                <span class="source-card-type">Rapport annuel · Consulté 2023</span>
+            </div>
+            <div class="source-card">
+                <span class="source-card-title">Geekflare — DevOps en 2025 : Tendances & Statistiques</span>
+                <a class="source-card-url" href="https://geekflare.com/fr/devops-latest-trends/" target="_blank">geekflare.com/fr/devops-latest-trends</a>
+                <span class="source-card-type">Article · Avril 2025</span>
+            </div>
+            <div class="source-card">
+                <span class="source-card-title">Gologic — DevOps en bref : retour sur 2024</span>
+                <a class="source-card-url" href="https://www.gologic.ca/devops-en-bref-retour-sur-2024-et-les-tendances-pour-2025/" target="_blank">gologic.ca/devops-en-bref-retour-sur-2024</a>
+                <span class="source-card-type">Article · Mars 2025</span>
+            </div>
+            <div class="source-card">
+                <span class="source-card-title">Atlanse — 10 tendances DevOps 2025</span>
+                <a class="source-card-url" href="https://atlanse.com/analyse/10-tendances-devops-2025/" target="_blank">atlanse.com/analyse/10-tendances-devops-2025</a>
+                <span class="source-card-type">Article · Décembre 2025</span>
+            </div>
+            <div class="source-card">
+                <span class="source-card-title">Spacelift — Top 47 DevOps Statistics 2026</span>
+                <a class="source-card-url" href="https://spacelift.io/blog/devops-statistics" target="_blank">spacelift.io/blog/devops-statistics</a>
+                <span class="source-card-type">Rapport statistiques · 2026</span>
+            </div>
+            <div class="source-card">
+                <span class="source-card-title">Syloe — DevOps & Cloud Tendances 2023</span>
+                <a class="source-card-url" href="https://www.syloe.com/devops-et-cloud-tendances-et-logiciels-en-2023/" target="_blank">syloe.com/devops-et-cloud-tendances-2023</a>
+                <span class="source-card-type">Article · Janvier 2023</span>
+            </div>
+            <div class="source-card">
+                <span class="source-card-title">Ambient IT — Statistiques DevOps 2024</span>
+                <a class="source-card-url" href="https://www.ambient-it.net/statistiques-devops/" target="_blank">ambient-it.net/statistiques-devops</a>
+                <span class="source-card-type">Article · Décembre 2023</span>
+            </div>
+            <div class="source-card">
+                <span class="source-card-title">Gartner — Prédictions Cloud & DevOps</span>
+                <a class="source-card-url" href="https://www.gartner.com" target="_blank">gartner.com</a>
+                <span class="source-card-type">Rapport Gartner · 2023–2025</span>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        Veille Technologique Cloud &amp; DevOps 2023–2025 — Decottignies Jérémy — BTS SIO
+    </footer>
+
+    <script>
+        // ── Progress bar ───────────────────────────────────────
+        const bar = document.getElementById('progress-bar');
+        window.addEventListener('scroll', () => {
+            const h = document.documentElement;
+            const pct = (window.scrollY / (h.scrollHeight - h.clientHeight)) * 100;
+            bar.style.width = pct + '%';
+        }, { passive: true });
+
+        // ── Scroll reveal ──────────────────────────────────────
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) {
+                    setTimeout(() => e.target.classList.add('visible'), i * 80);
+                    io.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.timeline-item, .tech-card, .market-stat').forEach(el => io.observe(el));
+    </script>
+
+{% endblock %}
