@@ -66,7 +66,6 @@
 
             <div class="row g-4">
 
-                {# Développement #}
                 <div class="col-md-4 reveal">
                     <div class="card h-100 p-4">
                         <div class="mb-3" style="
@@ -85,7 +84,6 @@
                     </div>
                 </div>
 
-                {# Outils #}
                 <div class="col-md-4 reveal" style="transition-delay:.08s">
                     <div class="card h-100 p-4">
                         <div class="mb-3" style="
@@ -104,7 +102,6 @@
                     </div>
                 </div>
 
-                {# Soft skills #}
                 <div class="col-md-4 reveal" style="transition-delay:.16s">
                     <div class="card h-100 p-4">
                         <div class="mb-3" style="
@@ -139,9 +136,10 @@
             {% if experiences is not empty %}
                 <div class="timeline">
                     {% for exp in experiences %}
-                        <div class="timeline-item mb-4 ps-3 reveal" style="transition-delay: {{ loop.index0 * 0.1 }}s;">
+                        <div class="timeline-item mb-5 ps-3 reveal" style="transition-delay: {{ loop.index0 * 0.1 }}s;">
                             <div class="timeline-dot"></div>
 
+                            {# En-tête #}
                             <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
                                 <h5 class="mb-0" style="font-size: 1rem;">{{ exp.titre }}</h5>
                                 <span class="tech-badge">{{ exp.entreprise }}</span>
@@ -155,15 +153,39 @@
                                 {% endif %}
                             </div>
 
-                            <p class="mb-2" style="font-size: .8rem; color: var(--text-muted);">
+                            {# Date & lieu #}
+                            <p class="mb-3" style="font-size: .8rem; color: var(--text-muted);">
                                 {{ exp.lieu }} · {{ exp.type }} ·
                                 {{ exp.dateDebut|date('m/Y') }}
                                 {% if exp.dateFin %} – {{ exp.dateFin|date('m/Y') }}{% endif %}
                             </p>
 
-                            <p class="mb-0" style="font-size: .9rem; color: var(--text-muted);">
+                            {# Description stylée #}
+                            <div class="about-content mb-3" style="font-size: .875rem; color: var(--text-muted); line-height: 1.75;">
                                 {{ exp.description|raw }}
-                            </p>
+                            </div>
+
+                            {# Compétences BTS SIO #}
+                            {% if exp.competences|length > 0 %}
+                                <div class="mt-2">
+                                    <p style="font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--text-muted); margin-bottom: .5rem;">
+                                        Compétences BTS SIO
+                                    </p>
+                                    <div class="d-flex flex-wrap gap-2">
+                                        {% for competence in exp.competences %}
+                                            <span style="
+                                            font-size: .72rem; font-weight: 600;
+                                            padding: .25rem .75rem;
+                                            border-radius: 999px;
+                                            background: rgba(var(--accent-rgb),.08);
+                                            color: var(--accent);
+                                            border: 1px solid rgba(var(--accent-rgb),.2);
+                                        ">{{ competence.code }} — {{ competence.libelle }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+
                         </div>
                     {% endfor %}
                 </div>
@@ -210,9 +232,9 @@
                             </p>
 
                             {% if edu.description %}
-                                <p class="mb-0" style="font-size: .9rem; color: var(--text-muted);">
+                                <div class="about-content" style="font-size: .875rem; color: var(--text-muted); line-height: 1.75;">
                                     {{ edu.description|raw }}
-                                </p>
+                                </div>
                             {% endif %}
 
                         </div>
@@ -246,5 +268,58 @@
             </div>
         </div>
     </section>
+
+    <style>
+        .about-content h3 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text);
+            margin-top: 1.25rem;
+            margin-bottom: .5rem;
+        }
+
+        .about-content h2 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text);
+            margin-top: 1.5rem;
+            margin-bottom: .5rem;
+        }
+
+        .about-content ul,
+        .about-content ol {
+            padding-left: 1.2rem;
+            margin-bottom: .75rem;
+        }
+
+        .about-content li { margin-bottom: .25rem; }
+
+        .about-content p { margin-bottom: .75rem; }
+
+        .about-content strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .about-content code {
+            font-size: .82rem;
+            padding: .15rem .4rem;
+            border-radius: .35rem;
+            background: rgba(var(--accent-rgb), .08);
+            color: var(--accent);
+        }
+
+        .about-content pre {
+            background: var(--bg-section);
+            border: 1px solid var(--border);
+            border-radius: .75rem;
+            padding: 1rem;
+            overflow-x: auto;
+            font-size: .82rem;
+            margin-bottom: .75rem;
+        }
+    </style>
 
 {% endblock %}
